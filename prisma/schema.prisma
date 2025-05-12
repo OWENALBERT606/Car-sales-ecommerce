@@ -1,0 +1,260 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+enum UserRole {
+  USER
+  ADMIN
+  FARMER
+}
+enum OrderStatus {
+  PENDING
+  CONFIRMED
+  DELIVERED
+  CANCELLED
+}
+
+model Role {
+  id          String   @id @default(cuid())
+  displayName String // Human-readable name (e.g., "Store Manager")
+  roleName    String   @unique // System name (e.g., "store_manager")
+  description String?
+  permissions String[] // Array of permission strings
+  users       User[]   @relation("UserRoles")
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([roleName])
+}
+
+model User {
+  id            String    @id @default(cuid())
+  name          String
+  firstName     String
+  lastName      String
+  phone         String    @unique
+  email         String    @unique
+  emailVerified DateTime?
+  image         String?
+  jobTitle      String?
+  location     Location? @relation(fields: [locationId], references: [id])
+  locationId   String?
+  roles         Role[]    @relation("UserRoles") // Updated to support multiple roles
+  // role          UserRole  @default(USER)
+  password      String?
+  status        Boolean   @default(true)
+  accounts      Account[]
+  sessions      Session[]
+  orders      Order[]    @relation("UserOrders")
+  reviews     Review[]
+  messagesSent    Message[] @relation("Sender")
+  messagesReceived Message[] @relation("Receiver")
+  notifications   Notification[]
+  farms       Farm[]
+  blogs         Blog[]
+  isVerfied     Boolean   @default(false)
+  token         String?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  roleId        String?
+}
+
+model Blog {
+  id            String       @id @default(cuid())
+  title         String
+  slug          String       @unique
+  description   String?      @db.Text // Meta description for SEO
+  thumbnail     String?
+  content       String?      @db.Text
+  published     Boolean?     @default(false)
+  featured      Boolean?     @default(false)
+  author        User         @relation(fields: [authorId], references: [id])
+  authorId      String
+  authorName    String
+  authorImage   String?
+  authorTitle   String?
+  category      Category @relation(fields: [categoryId], references: [id],onDelete: Cascade)
+  categoryId    String
+  readingTime   Int? // Estimated reading time in minutes
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @updatedAt
+}
+
+model Category {
+  id        String    @id @default(cuid())
+  name     String    @unique
+  imageUrl  String?
+  slug      String    @unique
+  products  Product[]
+  banners   Banner[]
+  blogs     Blog[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
+model Product {
+  id            String    @id @default(cuid())
+  name          String
+  description   String?
+  imageUrls       String[]
+  imageUrl      String?
+  price         Float
+  discountedPrice    Float? @default(0)
+  status        ProductStatus @default(IN_STOCK)
+  type          ProductType
+  rating        Float     @default(0)
+  category      Category  @relation(fields: [categoryId], references: [id],onDelete: Cascade)
+  categoryId    String
+  unit          Unit?     @relation(fields: [unitId], references: [id])
+  farm          Farm?     @relation(fields: [farmId], references: [id])
+  farmId        String?
+  unitId        String?
+  reviews       Review[]
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  orderItems    OrderItem[]
+}
+
+enum ProductStatus {
+  IN_STOCK
+  OUT_OF_STOCK
+  ON_SALE
+}
+
+enum ProductType {
+  LOCAL
+  ORGANIC
+}
+
+model Order {
+  id          String     @id @default(cuid())
+  user        User       @relation("UserOrders", fields: [userId], references: [id])
+  userId      String
+  items       OrderItem[]
+  total       Float
+  status      OrderStatus @default(PENDING)
+  scheduledAt DateTime?
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+}
+
+model OrderItem {
+  id         String   @id @default(cuid())
+  order      Order    @relation(fields: [orderId], references: [id])
+  orderId    String
+  product    Product  @relation(fields: [productId], references: [id])
+  productId  String
+  quantity   Int
+  unitPrice  Float
+  total      Float
+}
+
+model Review {
+  id        String   @id @default(cuid())
+  product   Product  @relation(fields: [productId], references: [id])
+  productId String
+  user      User     @relation(fields: [userId], references: [id])
+  userId    String
+  rating    Int
+  comment   String?
+  createdAt DateTime @default(now())
+}
+
+model Message {
+  id        String   @id @default(cuid())
+  sender    User     @relation("Sender", fields: [senderId], references: [id])
+  senderId  String
+  receiver  User     @relation("Receiver", fields: [receiverId], references: [id])
+  receiverId String
+  content   String
+  read      Boolean  @default(false)
+  createdAt DateTime @default(now())
+}
+
+model Notification {
+  id        String   @id @default(cuid())
+  user      User     @relation(fields: [userId], references: [id])
+  userId    String
+  message   String
+  read      Boolean  @default(false)
+  createdAt DateTime @default(now())
+}
+
+model Farm {
+  id        String    @id @default(cuid())
+  name      String
+  slug      String @unique
+  owner     User      @relation(fields: [ownerId], references: [id])
+  ownerId   String
+  location     Location @relation(fields: [locationId], references: [id])
+  locationId   String
+  products  Product[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
+model Unit {
+  id        String   @id @default(cuid())
+  name      String
+  prefix    String
+  slug      String  @unique 
+  products  Product[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+model Location {
+  id        String   @id @default(cuid())
+  name      String
+  slug      String  @unique 
+  farms     Farm[]
+  users     User[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Banner {
+  id          String   @id @default(cuid())
+  title       String
+  description String
+  imageUrl    String
+  categoryId  String
+  category    Category @relation(fields: [categoryId],references: [id],onDelete: Cascade)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+

@@ -1,0 +1,73 @@
+"use client";
+import { getAllCategories } from '@/actions/categories'
+import CategorySidebar from '@/components/frontend/shop/category-sidebar'
+import FeaturedCategories from '@/components/frontend/shop/featured-categories'
+import FeaturedProducts from '@/components/frontend/shop/featured-products'
+import HeroSlider from '@/components/frontend/shop/hero-slider'
+import LatestDeals from '@/components/frontend/shop/latest-deals'
+import LatestNews from '@/components/frontend/shop/latest-news'
+import NewsletterSubscription from '@/components/frontend/shop/news-letter-subscription'
+import ProductGridWithSidebar from '@/components/frontend/shop/product-grid-with-sidebar'
+import PromotionalBanners from '@/components/frontend/shop/promotional-banners'
+import UserReviews from '@/components/frontend/shop/user-reviews'
+import LocationSlider from '@/components/locationSlider';
+import { useBanners } from '@/hooks/useBanners';
+import { useCategories } from '@/hooks/useCategories'
+import { useFarms } from '@/hooks/useFarms';
+import { useLocations } from '@/hooks/useLocations';
+import { useProducts } from '@/hooks/useProducts';
+import { Category } from '@prisma/client'
+import React from 'react'
+
+export default function page() {
+  const { categories, error, isLoading } = useCategories();
+  const { farms} = useFarms();
+   const {products}=useProducts();
+  const { locations} = useLocations();
+  const { banners} = useBanners();
+
+
+  return (
+    <div>
+      <div className="container mx-auto px-4 md:px-12 lg:px-24 py-6">
+        <div className="flex flex-col gap-6 md:flex-row">
+          <CategorySidebar farms={farms} />
+          <div className="flex-1">
+            <HeroSlider />
+          </div>
+        </div>
+        <div className="my-6">
+          <FeaturedCategories categories={categories} />
+        </div>
+        <LocationSlider locations={locations}/>
+        <div className="">
+          <h2 className="mb-6 text-2xl font-bold">Special Offers</h2>
+          <PromotionalBanners banners={banners}/>
+        </div>
+        <div className="">
+      <div className="container mx-auto px-4 py-4">
+        <h1 className="mb-4 text-3xl font-bold text-gray-900">Farm Connect Marketplace</h1>
+        <section className="mb-12">
+          <FeaturedProducts products={products} categories={categories} />
+        </section>
+      </div>
+        </div>
+        <div className="my-8">
+          <LatestDeals products={products}/>
+        </div>
+        <div className="my-12">
+          <h2 className="mb-6 text-2xl font-bold">Discounted Fruits & Vegetables</h2>
+          <ProductGridWithSidebar products={products} />
+        </div>
+      <UserReviews />
+        <div className="container mx-auto px-4 py-12">
+        <div className="my-12">
+          <LatestNews />
+        </div>
+      </div>
+        <NewsletterSubscription/>
+      </div>
+     
+    </div>
+  )
+}
