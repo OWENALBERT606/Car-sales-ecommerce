@@ -67,7 +67,7 @@ export default function LoginForm() {
           <div className="grid gap-2  mt-10 md:mt-0">
             <h1 className="text-3xl font-bold">Login to your Account</h1>
             <p className="text-muted-foreground text-sm">
-              Welcome Back to <span className="text-green-600">FarmConnect</span>
+              Welcome Back to <span className="text-red-600">Nagota Motors</span>
             </p>
           </div>
           <div className="">
@@ -110,7 +110,7 @@ export default function LoginForm() {
               Not a Registered ?{" "}
               <Link
                 href="/register"
-                className="font-semibold leading-6 text-green-600 hover:text-green-500"
+                className="font-semibold leading-6 text-blue-600 hover:text-blue-500"
               >
                 Create Account
               </Link>
