@@ -19,19 +19,19 @@ export default function Logo({
   if (variant === "light") {
     return (
       <div className="flex items-center space-x-2">
-        <div className="bg-green-500 rounded-full p-1 flex items-center justify-center">
+        <div className="bg-blue-700 rounded-full p-1 flex items-center justify-center">
           <div className="relative" style={{width: imageSize, height: imageSize}}>
             <Image 
-              src="/logo.jpg" 
-              alt="Farm Connect Logo"
+              src="/images.png" 
+              alt="Nagota Logo"
               width={imageSize}
               height={imageSize}
               className="rounded-full"
             />
           </div>
         </div>
-        <span className={cn("font-bold text-xl", size === "lg" && "text-4xl")}>
-          Farm {full && <span className="text-green-500">Connect</span>}
+        <span className={cn("font-bold text-xl text-red-600", size === "lg" && "text-4xl")}>
+          Nagota {full && <span className="text-blue-700">Motors</span>}
         </span>
       </div>
     );
@@ -50,7 +50,7 @@ export default function Logo({
           </div>
         </div>
         <span className="font-bold text-xl">
-          Farm<span className="text-green-100">Connect</span>
+          Farm<span className="text-blue-100">Connect</span>
         </span>
       </Link>
     );

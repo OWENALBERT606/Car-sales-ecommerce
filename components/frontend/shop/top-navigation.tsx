@@ -11,7 +11,7 @@ import {
 export default function TopNavigationBar() {
   return (
     <div className="w-full px-4 md:px-12 lg:px-24 border-b border-gray-200 bg-white">
-      <div className="h-1 w-full bg-green-600"></div>
+      <div className="h-1 w-full bg-red-600"></div>
       <div className="container flex h-10 items-center justify-between px-4 text-sm">
         {/* Left side navigation links */}
         <div className="hidden space-x-6 md:flex">
@@ -27,7 +27,7 @@ export default function TopNavigationBar() {
           <Link href="/wishlist" className="text-gray-700 hover:text-gray-900">
             Wishlist
           </Link>
-          <Link href="/sell" className="text-green-700 font-medium hover:text-green-900">
+          <Link href="/sell" className="text-red-700 font-medium hover:text-red-900">
             Sell Produce
           </Link>
         </div>

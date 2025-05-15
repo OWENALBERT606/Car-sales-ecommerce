@@ -98,7 +98,7 @@ export default function MainNav({ session }: { session: Session | null }) {
 
           <Button variant="ghost" size="icon" className="relative">
            <Link href="/wishlist"> <Heart className="h-6 w-6" /></Link>
-            <span className="absolute -right-1 -top-1 flex h-5 w-5 items-center justify-center rounded-full bg-green-500 text-xs font-bold text-white">
+            <span className="absolute -right-1 -top-1 flex h-5 w-5 items-center justify-center rounded-full bg-red-500 text-xs font-bold text-white">
               0
             </span>
             <span className="sr-only">Wishlist</span>
@@ -106,7 +106,7 @@ export default function MainNav({ session }: { session: Session | null }) {
 
           <Button variant="ghost" size="icon" className="relative">
             <Link href="/cart"><ShoppingCart className="h-6 w-6" /></Link>
-            <span className="absolute -right-1 -top-1 flex h-5 w-5 items-center justify-center rounded-full bg-green-500 text-xs font-bold text-white">
+            <span className="absolute -right-1 -top-1 flex h-5 w-5 items-center justify-center rounded-full bg-red-500 text-xs font-bold text-white">
               0
             </span>
             <span className="sr-only">Cart</span>

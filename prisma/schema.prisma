@@ -1,5 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
   provider = "prisma-client-js"
@@ -39,8 +37,9 @@ model Session {
 
 enum UserRole {
   USER
+  DEALER
   ADMIN
-  FARMER
+  SUPER_ADMIN
 }
 enum OrderStatus {
   PENDING
@@ -72,10 +71,8 @@ model User {
   emailVerified DateTime?
   image         String?
   jobTitle      String?
-  location     Location? @relation(fields: [locationId], references: [id])
-  locationId   String?
-  roles         Role[]    @relation("UserRoles") // Updated to support multiple roles
-  // role          UserRole  @default(USER)
+ address        String?
+  roles         Role[]    @relation("UserRoles")
   password      String?
   status        Boolean   @default(true)
   accounts      Account[]
@@ -85,7 +82,6 @@ model User {
   messagesSent    Message[] @relation("Sender")
   messagesReceived Message[] @relation("Receiver")
   notifications   Notification[]
-  farms       Farm[]
   blogs         Blog[]
   isVerfied     Boolean   @default(false)
   token         String?
@@ -126,23 +122,72 @@ model Category {
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
 }
+model Type {
+  id        String    @id @default(cuid())
+  name     String    @unique
+  imageUrl  String?
+  slug      String    @unique
+  products  Product[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+model Model {
+  id        String    @id @default(cuid())
+  name     String    @unique
+  slug      String    @unique
+  products  Product[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
+model Year {
+  id        String    @id @default(cuid())
+  name     String    @unique
+  slug      String    @unique
+  products  Product[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+model Steering {
+  id        String    @id @default(cuid())
+  name     String    @unique
+  slug      String    @unique
+  products  Product[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+model Fuel {
+  id        String    @id @default(cuid())
+  name     String    @unique
+  slug      String    @unique
+  products  Product[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
 
 model Product {
   id            String    @id @default(cuid())
-  name          String
+  make          String
   description   String?
-  imageUrls       String[]
-  imageUrl      String?
+  imageUrls     String[]
   price         Float
-  discountedPrice    Float? @default(0)
+  engine        String
+  color         String
   status        ProductStatus @default(IN_STOCK)
-  type          ProductType
+   usage          ProductUsage @default(NEW)
   rating        Float     @default(0)
   category      Category  @relation(fields: [categoryId], references: [id],onDelete: Cascade)
   categoryId    String
-  unit          Unit?     @relation(fields: [unitId], references: [id])
-  farm          Farm?     @relation(fields: [farmId], references: [id])
-  farmId        String?
+  type      Type  @relation(fields: [typeId], references: [id],onDelete: Cascade)
+  typeId    String
+  year          Year  @relation(fields: [yearId], references: [id],onDelete: Cascade)
+  yearId    String
+  model          Model  @relation(fields: [modelId], references: [id],onDelete: Cascade)
+  modelId    String
+  steering      Steering  @relation(fields: [steeringId], references: [id],onDelete: Cascade)
+  steeringId    String
+  fuel          Fuel  @relation(fields: [fuelId], references: [id],onDelete: Cascade)
+  fuelId        String
   unitId        String?
   reviews       Review[]
   createdAt     DateTime  @default(now())
@@ -156,9 +201,9 @@ enum ProductStatus {
   ON_SALE
 }
 
-enum ProductType {
-  LOCAL
-  ORGANIC
+enum ProductUsage {
+  NEW
+  USED
 }
 
 model Order {
@@ -215,37 +260,6 @@ model Notification {
   createdAt DateTime @default(now())
 }
 
-model Farm {
-  id        String    @id @default(cuid())
-  name      String
-  slug      String @unique
-  owner     User      @relation(fields: [ownerId], references: [id])
-  ownerId   String
-  location     Location @relation(fields: [locationId], references: [id])
-  locationId   String
-  products  Product[]
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
-}
-
-model Unit {
-  id        String   @id @default(cuid())
-  name      String
-  prefix    String
-  slug      String  @unique 
-  products  Product[]
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-}
-model Location {
-  id        String   @id @default(cuid())
-  name      String
-  slug      String  @unique 
-  farms     Farm[]
-  users     User[]
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-}
 
 model Banner {
   id          String   @id @default(cuid())

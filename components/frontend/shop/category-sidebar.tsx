@@ -114,7 +114,7 @@ export default function AgriCategorySidebar({farms}:{farms:any}) {
 
   return (
     <div className="w-full max-w-[260px] rounded-md border border-gray-200 bg-white">
-      <div className="rounded-t-md bg-green-600 p-3">
+      <div className="rounded-t-md bg-blue-600 p-3">
         <button className="flex w-full items-center justify-between text-white">
           <span className="font-medium">Active Farms</span>
           <ChevronRight className="h-4 w-4 rotate-90 transform" />
