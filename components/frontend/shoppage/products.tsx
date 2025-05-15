@@ -16,7 +16,7 @@ import { Badge } from "@/components/ui/badge"
 import Image from "next/image"
 import Link from "next/link"
 
-export default function Products({ products,categories,farms,locations }: { products: any[] ,farms:any[],locations:any[],categories:any[]}) {
+export default function Products({ products,categories}: { products: any[] ,categories:any[]}) {
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid")
   const [sortBy, setSortBy] = useState("latest")
   const [itemsPerPage, setItemsPerPage] = useState("16")

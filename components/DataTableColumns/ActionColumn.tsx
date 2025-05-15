@@ -26,10 +26,6 @@ import Link from "next/link";
 import { deleteUser } from "@/actions/users";
 import { deleteCategory } from "@/actions/categories";
 import { useCategories } from "@/hooks/useCategories";
-import { deleteUnit } from "@/actions/units";
-import { useUnits } from "@/hooks/useUnits";
-import { deleteFarm } from "@/actions/farms";
-import { useFarms } from "@/hooks/useFarms";
 
 type ActionColumnProps = {
   row: any;
@@ -44,8 +40,6 @@ export default function ActionColumn({
   id = "",
 }: ActionColumnProps) {
   const isActive = row.isActive;
-  const {deleteUnit,error,isLoading}=useUnits();
-  const {deleteFarm}=useFarms();
   async function handleDelete() {
     try {
       if (model === "user") {
@@ -54,23 +48,12 @@ export default function ActionColumn({
           window.location.reload();
         }
         toast.success(`${model} Deleted Successfully`);
-      }else if(model==="farm"){
-        deleteFarm(id);
-        window.location.reload();
-
       }
       else if(model==="category"){
         const res = await deleteCategory(id);
         if (res?.ok) {
           window.location.reload();
         }
-
-      }else if(model==="unit"){
-        deleteUnit(id);
-        // const res = await deleteUnit(id);
-        // if (res?.ok) {
-          window.location.reload();
-        // }
 
       }
     } catch (error) {

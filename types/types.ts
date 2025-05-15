@@ -1,4 +1,4 @@
-import { ProductStatus, ProductType, Role, User } from "@prisma/client";
+import { ProductStatus, Role, User } from "@prisma/client";
 
 export type CategoryProps = {
   name: string;
@@ -103,7 +103,6 @@ export type ProductProps = {
   imageUrls: string[];
   discountedPrice: number | null;
   status: ProductStatus;   // <- make required
-  type: ProductType;       // <- make proper type
   rating: number;
   categoryId: string;
   unitId: string | null;

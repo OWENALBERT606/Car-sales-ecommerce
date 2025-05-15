@@ -21,8 +21,6 @@ import ImageInput from "../FormInputs/ImageInput";
 import FormFooter from "./FormFooter";
 import { useCategories } from "@/hooks/useCategories";
 import { updateProductById } from "@/actions/products";
-import { useFarms } from "@/hooks/useFarms";
-import { useUnits } from "@/hooks/useUnits";
 import FormSelectInput from "../FormInputs/FormSelectInput";
 import { useProducts } from "@/hooks/useProducts";
 import MultipleImageInput from "../FormInputs/MultipleImageInput";

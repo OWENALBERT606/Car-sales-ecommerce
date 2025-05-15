@@ -26,8 +26,6 @@ export async function getAllProducts():Promise<QueriesResponse>{
     const products = await db.product.findMany({
       orderBy: {
         createdAt: "desc",
-      },include:{
-        unit:true
       }
     });
 
@@ -56,9 +54,6 @@ export async function getProductById(id: string) {
     const product = await db.product.findUnique({
       where: {
         id,
-      },include:{
-        unit:true,
-        category:true
       }
     });
     return product;

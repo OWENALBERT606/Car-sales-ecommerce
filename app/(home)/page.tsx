@@ -1,6 +1,4 @@
 "use client";
-import { getAllCategories } from '@/actions/categories'
-import CategorySidebar from '@/components/frontend/shop/category-sidebar'
 import FeaturedCategories from '@/components/frontend/shop/featured-categories'
 import FeaturedProducts from '@/components/frontend/shop/featured-products'
 import HeroSlider from '@/components/frontend/shop/hero-slider'
@@ -10,11 +8,9 @@ import NewsletterSubscription from '@/components/frontend/shop/news-letter-subsc
 import ProductGridWithSidebar from '@/components/frontend/shop/product-grid-with-sidebar'
 import PromotionalBanners from '@/components/frontend/shop/promotional-banners'
 import UserReviews from '@/components/frontend/shop/user-reviews'
-import LocationSlider from '@/components/locationSlider';
 import { useBanners } from '@/hooks/useBanners';
 import { useCategories } from '@/hooks/useCategories'
 import { useProducts } from '@/hooks/useProducts';
-import { Category } from '@prisma/client'
 import React from 'react'
 
 export default function page() {

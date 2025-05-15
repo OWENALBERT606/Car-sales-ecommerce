@@ -3,8 +3,6 @@ import AgricultureBanner from '@/components/frontend/shoppage/agriculture-banner
 import Products from '@/components/frontend/shoppage/products'
 import { useBanners } from '@/hooks/useBanners';
 import { useCategories } from '@/hooks/useCategories';
-import { useFarms } from '@/hooks/useFarms';
-import { useLocations } from '@/hooks/useLocations';
 import { useProducts } from '@/hooks/useProducts';
 import React from 'react'
 
@@ -12,12 +10,10 @@ export default function page() {
   const {products,error, isLoading}=useProducts();
   const {banners}=useBanners();
   const {categories}=useCategories();
-  const {farms}=useFarms();
-  const {locations}=useLocations();
   return (
     <div className='container mx-auto px-4 py-8 md:px-12 lg:px-24 md:p-6'>
         <AgricultureBanner banners={banners}/>
-        <Products products={products} farms={farms} locations={locations} categories={categories}/>
+        <Products products={products} categories={categories}/>
     </div>
   )
 }

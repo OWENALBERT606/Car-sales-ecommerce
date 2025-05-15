@@ -22,8 +22,6 @@ import ImageInput from "../FormInputs/ImageInput";
 import FormFooter from "./FormFooter";
 import { useCategories } from "@/hooks/useCategories";
 import { updateProductById } from "@/actions/products";
-import { useFarms } from "@/hooks/useFarms";
-import { useUnits } from "@/hooks/useUnits";
 import FormSelectInput from "../FormInputs/FormSelectInput";
 import { useProducts } from "@/hooks/useProducts";
 import MultipleImageInput from "../FormInputs/MultipleImageInput";
@@ -48,37 +46,17 @@ export default function ProductForm({
     formState: { errors },
   } = useForm<ProductProps>({
     defaultValues: {
-      name: initialData?.name
+      // name: initialData?.name
     },
   });
   const {createProduct}=useProducts();
   const router = useRouter();
   const {categories,isLoading} =useCategories();
-  const {farms} =useFarms();
-  const {units} =useUnits();
   const producTypes=[
     { label: "Local", value:"LOCAL" },
     { label: "Organic", value: "ORGANIC"},
   ]
-  
 
-  const farmsData= farms.map((item:any,i:any)=>{
-    return(
-      {
-        label:item.name,
-        value:item.id
-      }
-    )
-  })
-
-  const unitsData= units.map((item:any,i:any)=>{
-    return(
-      {
-        label:item.name,
-        value:item.id
-      }
-    )
-  })
   const categoriesData= categories.map((item:any,i:any)=>{
     return(
       {
@@ -98,24 +76,19 @@ export default function ProductForm({
 
 
   const [loading, setLoading] = useState(false);
-  const initialImage = initialData?.imageUrl || "/placeholder.svg";
-  const [imageUrl, setImageUrl] = useState(initialImage);
+  // const [imageUrl, setImageUrl] = useState(initialImage);
   const [imageUrls, setImageUrls] = useState([""]);
   
   const [selectedCategory,setSelectedCategory]=useState<any>(categoriesData[0]);
-  const [selectedUnit,setSelectedUnit]=useState<any>(unitsData[0]);
-  const [selectedFarm,setSelectedFarm]=useState<any>(farmsData[0]);
   const [selectedType,setSelectedType]=useState<any>(TypesData[0]);
 
 
   async function saveData(data: ProductProps) {
     try {
       setLoading(true);
-      data.imageUrl = imageUrl??"";
-      data.unitId=selectedUnit.value;
-      data.categoryId=selectedCategory.value;
-      data.farmId=selectedFarm.value;
-      data.type=selectedType.value
+      // data.imageUrl = imageUrl??"";
+      data.categoryId=selectedCategory.value
+      // data.type=selectedType.value
       data.status = data.status ?? ProductStatus.IN_STOCK;
       data.rating = data.rating ?? 0; // just in case
       data.price=Number(data.price);
@@ -134,15 +107,14 @@ export default function ProductForm({
         reset();
         //route
         router.push("/dashboard/products");
-        setImageUrl("/placeholder.svg");
       } else {
-        createProduct(data);
+        // createProduct(data);
         setLoading(false);
         reset();
         // Toast
         toast.success("Successfully Created!");
         //reset
-        setImageUrl("/placeholder.svg");
+        // setImageUrl("/placeholder.svg");
         //route
         router.push("/dashboard/products");
       }
@@ -193,25 +165,12 @@ export default function ProductForm({
                     type="number"
                   />
                          <FormSelectInput
-                                  label="Unit"
-                                  options={unitsData}
-                                  option={selectedUnit}
-                                  setOption={setSelectedUnit}
-                                  toolTipText="Add New Unit"
-                                  href="/dashboard/units/new"
-                                />
-                         <FormSelectInput
                                   label="Product Type"
                                   options={TypesData}
                                   option={selectedType}
                                   setOption={setSelectedType}
                                 />
-                         <FormSelectInput
-                                  label="Farm"
-                                  options={farmsData}
-                                  option={selectedFarm}
-                                  setOption={setSelectedFarm}
-                                />
+    
                          <FormSelectInput
                                   label="Category"
                                   options={categoriesData}
@@ -242,12 +201,12 @@ export default function ProductForm({
         </div>
         <div className="lg:col-span-4 col-span-full ">
           <div className="grid auto-rows-max items-start gap-4 ">
-            <ImageInput
+            {/* <ImageInput
               title="Product Image Image"
               imageUrl={imageUrl}
               setImageUrl={setImageUrl}
               endpoint="productImage"
-            />
+            /> */}
           </div>
         </div>
       </div>
