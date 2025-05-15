@@ -14,8 +14,8 @@ export default function FeaturedCategories({ categories }: { categories: any }) 
   // Number of items to show based on screen size
   const getItemsToShow = () => {
     if (typeof window !== "undefined") {
-      if (window.innerWidth >= 1280) return 5 // xl
-      if (window.innerWidth >= 1024) return 4 // lg
+      if (window.innerWidth >= 1280) return 7 // xl
+      if (window.innerWidth >= 1024) return 7 // lg
       if (window.innerWidth >= 768) return 3 // md
       if (window.innerWidth >= 640) return 2 // sm
       return 1 // xs
@@ -76,10 +76,10 @@ export default function FeaturedCategories({ categories }: { categories: any }) 
       {/* Header */}
       <div className="mb-8 flex items-center justify-between">
         <div>
-          <h2 className="text-2xl font-bold text-gray-900">Featured Categories</h2>
-          <p className="text-sm text-gray-500">Browse our most popular agricultural categories</p>
+          <h2 className="text-2xl font-bold text-red-600">Featured Categories</h2>
+          <p className="text-sm text-gray-500">Browse our most popular vehicle categories</p>
         </div>
-        <Link href="/categories" className="flex items-center text-sm font-medium text-green-600 hover:underline">
+        <Link href="/categories" className="flex items-center text-sm font-medium text-red-600 hover:underline">
           View All <ArrowRight className="ml-1 h-4 w-4" />
         </Link>
       </div>
@@ -150,7 +150,7 @@ export default function FeaturedCategories({ categories }: { categories: any }) 
             <button
               key={index}
               className={`h-2 rounded-full transition-all ${
-                currentIndex === index ? "w-6 bg-green-600" : "w-2 bg-gray-300"
+                currentIndex === index ? "w-6 bg-red-600" : "w-2 bg-gray-300"
               }`}
               onClick={() => goToSlide(index)}
               aria-label={`Go to slide ${index + 1}`}

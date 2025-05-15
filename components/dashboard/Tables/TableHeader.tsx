@@ -242,7 +242,7 @@ export default function TableHeader({
                         </DialogDescription>
                       </DialogHeader>
                       <div className="h-72 w-full rounded-md border flex items-center justify-center flex-col">
-                        <div className="flex items-center justify-center w-24 h-24 bg-green-100 rounded-full">
+                        <div className="flex items-center justify-center w-24 h-24 bg-blue-100 rounded-full">
                           <Check />
                         </div>
                         <h2 className="text-xs pt-2 px-8 text-center">

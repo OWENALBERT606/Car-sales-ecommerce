@@ -81,6 +81,7 @@ export default function CategoryForm({
         setImageUrl("/placeholder.svg");
         //route
         router.push("/dashboard/categories");
+        router.refresh;
       }
     } catch (error) {
       setLoading(false);
