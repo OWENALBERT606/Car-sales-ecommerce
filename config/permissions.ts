@@ -55,6 +55,46 @@ export const permissions: ModulePermissions[] = [
     },
   },
   {
+    display: "Car types",
+    name: "types",
+    permissions: {
+      create: "types.create",
+      read: "types.read",
+      update: "types.update",
+      delete: "types.delete",
+    },
+  },
+  {
+    display: "Models",
+    name: "models",
+    permissions: {
+      create: "models.create",
+      read: "models.read",
+      update: "models.update",
+      delete: "models.delete",
+    },
+  },
+   {
+    display: "Years",
+    name: "years",
+    permissions: {
+      create: "years.create",
+      read: "years.read",
+      update: "years.update",
+      delete: "years.delete",
+    },
+  },
+   {
+    display: "Fuels",
+    name: "fuel",
+    permissions: {
+      create: "fuels.create",
+      read: "fuels.read",
+      update: "fuels.update",
+      delete: "fuels.delete",
+    },
+  },
+  {
     display: "Customers",
     name: "customers",
     permissions: {

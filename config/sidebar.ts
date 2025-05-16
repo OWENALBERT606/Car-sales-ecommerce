@@ -79,19 +79,24 @@ export const sidebarLinks: ISidebarLink[] = [
         permission: "categories.read",
       },
       {
-        title: "Units",
-        href: "/dashboard/units",
-        permission: "units.read",
+        title: "Car types",
+        href: "/dashboard/car-types",
+        permission: "types.read",
       },
       {
-        title: "Locations",
-        href: "/dashboard/locations",
-        permission: "locations.read",
+        title: "Models",
+        href: "/dashboard/models",
+        permission: "models.read",
       },
-      {
-        title: "Farms",
-        href: "/dashboard/farms",
-        permission: "farms.read",
+       {
+        title: "Years",
+        href: "/dashboard/years",
+        permission: "years.read",
+      },
+       {
+        title: "Fuels",
+        href: "/dashboard/fuels",
+        permission: "fuels.read",
       },
       {
         title: "Products",

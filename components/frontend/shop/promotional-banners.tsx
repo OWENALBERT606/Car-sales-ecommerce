@@ -17,7 +17,7 @@ export default function PromotionalBanners({banners}:{banners:any}) {
           }}
         />
         <div className="absolute inset-0 flex flex-col justify-end p-6">
-          <div className="mb-3 w-fit rounded-full bg-green-500 px-3 py-1 text-xs font-medium text-white">
+          <div className="mb-3 w-fit rounded-full bg-red-500 px-3 py-1 text-xs font-medium text-white">
             On Sale This Week
           </div>
           <h3 className="mb-4 text-2xl font-bold text-white">{item.title}</h3>

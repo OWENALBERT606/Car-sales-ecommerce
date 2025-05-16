@@ -26,6 +26,9 @@ import Link from "next/link";
 import { deleteUser } from "@/actions/users";
 import { deleteCategory } from "@/actions/categories";
 import { useCategories } from "@/hooks/useCategories";
+import { deleteType } from "@/actions/type";
+import { deleteBanner } from "@/actions/banners";
+import { deleteYear } from "@/actions/years";
 
 type ActionColumnProps = {
   row: any;
@@ -55,6 +58,25 @@ export default function ActionColumn({
           window.location.reload();
         }
 
+      }else if(model==="carType"){
+        const res = await deleteType(id);
+        if (res?.ok) {
+          window.location.reload();
+        }
+        toast.success(`${model} Deleted Successfully`);
+      }else if(model==="year"){
+        const res = await deleteYear(id);
+        if (res?.ok) {
+          window.location.reload();
+        }
+        toast.success(`${model} Deleted Successfully`);
+      }
+      else if(model==="banner"){
+        const res = await deleteBanner(id);
+        if (res?.ok) {
+          window.location.reload();
+        }
+        toast.success(`${model} Deleted Successfully`);
       }
     } catch (error) {
       // console.log(error);

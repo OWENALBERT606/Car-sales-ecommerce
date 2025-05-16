@@ -371,7 +371,7 @@ export default function TableHeader({
               )}
             </Dialog>
           )}
-          <Button size="sm" asChild className="h-8 gap-1">
+          <Button size="sm" asChild className="h-8 gap-1 bg-blue-600">
             <Link href={href}>
               <PlusCircle className="h-3.5 w-3.5" />
               <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">

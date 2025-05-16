@@ -47,6 +47,11 @@ enum OrderStatus {
   DELIVERED
   CANCELLED
 }
+enum Steering {
+  LEFT
+  RIGHT
+  CENTER
+}
 
 model Role {
   id          String   @id @default(cuid())
@@ -90,6 +95,7 @@ model User {
   roleId        String?
 }
 
+
 model Blog {
   id            String       @id @default(cuid())
   title         String
@@ -111,51 +117,6 @@ model Blog {
   updatedAt     DateTime     @updatedAt
 }
 
-model Category {
-  id        String    @id @default(cuid())
-  name     String    @unique
-  imageUrl  String?
-  slug      String    @unique
-  products  Product[]
-  banners   Banner[]
-  blogs     Blog[]
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
-}
-model Type {
-  id        String    @id @default(cuid())
-  name     String    @unique
-  imageUrl  String?
-  slug      String    @unique
-  products  Product[]
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
-}
-model Model {
-  id        String    @id @default(cuid())
-  name     String    @unique
-  slug      String    @unique
-  products  Product[]
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
-}
-
-model Year {
-  id        String    @id @default(cuid())
-  name     String    @unique
-  slug      String    @unique
-  products  Product[]
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
-}
-model Steering {
-  id        String    @id @default(cuid())
-  name     String    @unique
-  slug      String    @unique
-  products  Product[]
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
-}
 model Fuel {
   id        String    @id @default(cuid())
   name     String    @unique
@@ -164,10 +125,19 @@ model Fuel {
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
 }
+model Make {
+  id        String    @id @default(cuid())
+  name     String    @unique
+  imageUrl  String
+  slug      String    @unique
+  products  Product[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
 
 model Product {
   id            String    @id @default(cuid())
-  make          String
+  name          String
   description   String?
   imageUrls     String[]
   price         Float
@@ -184,8 +154,9 @@ model Product {
   yearId    String
   model          Model  @relation(fields: [modelId], references: [id],onDelete: Cascade)
   modelId    String
-  steering      Steering  @relation(fields: [steeringId], references: [id],onDelete: Cascade)
-  steeringId    String
+  make          Make  @relation(fields: [makeId], references: [id],onDelete: Cascade)
+  makeId    String
+  sterring    Steering @default(RIGHT)
   fuel          Fuel  @relation(fields: [fuelId], references: [id],onDelete: Cascade)
   fuelId        String
   unitId        String?
@@ -199,11 +170,6 @@ enum ProductStatus {
   IN_STOCK
   OUT_OF_STOCK
   ON_SALE
-}
-
-enum ProductUsage {
-  NEW
-  USED
 }
 
 model Order {
@@ -261,6 +227,29 @@ model Notification {
 }
 
 
+
+
+// done models
+model Model {
+  id        String    @id @default(cuid())
+  name     String    @unique
+  slug      String    @unique
+  products  Product[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+enum ProductUsage {
+  NEW
+  USED
+}
+model Year {
+  id        String    @id @default(cuid())
+  name     String    @unique
+  slug      String    @unique
+  products  Product[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
 model Banner {
   id          String   @id @default(cuid())
   title       String
@@ -271,4 +260,22 @@ model Banner {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
-
+model Category {
+  id        String    @id @default(cuid())
+  name     String    @unique
+  imageUrl  String?
+  slug      String    @unique
+  products  Product[]
+  banners   Banner[]
+  blogs     Blog[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+model Type {
+  id        String    @id @default(cuid())
+  name     String    @unique
+  slug      String    @unique
+  products  Product[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}

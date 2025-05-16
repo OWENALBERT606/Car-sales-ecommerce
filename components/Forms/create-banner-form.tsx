@@ -74,7 +74,6 @@ export default function CreateBannerForm({
   async function saveData(data: BannerProps) {
     try {
       setLoading(true);
-      data.imageUrl = imageUrl??"";
       data.categoryId=selectedCategory.value;
 
 

@@ -20,11 +20,11 @@ export async function createType(data: Omit<Type, "id" | "createdAt" | "updatedA
     const newType = await db.type.create({
       data,
     });
-    revalidatePath("/dashboard/types");
+    revalidatePath("/dashboard/car-types");
     return { success: true, data: newType };
   } catch (error) {
     console.log(error);
-    return { success: false, error: "Failed to create type" };
+    return { success: false, error: "Failed to create car type" };
   }
 }
 
