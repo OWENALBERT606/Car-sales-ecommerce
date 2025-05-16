@@ -35,7 +35,7 @@ export async function getAllProducts():Promise<QueriesResponse>{
   }
 }
 // update data
-export async function updateProductById(id: string, data:ProductProps) {
+export async function updateProductById(id: string, data:any) {
   try {
     const updatedProduct = await db.product.update({
       where: {
