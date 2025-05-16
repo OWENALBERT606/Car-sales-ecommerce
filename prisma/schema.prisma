@@ -35,37 +35,6 @@ model Session {
   user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
-enum UserRole {
-  USER
-  DEALER
-  ADMIN
-  SUPER_ADMIN
-}
-enum OrderStatus {
-  PENDING
-  CONFIRMED
-  DELIVERED
-  CANCELLED
-}
-enum Steering {
-  LEFT
-  RIGHT
-  CENTER
-}
-
-model Role {
-  id          String   @id @default(cuid())
-  displayName String // Human-readable name (e.g., "Store Manager")
-  roleName    String   @unique // System name (e.g., "store_manager")
-  description String?
-  permissions String[] // Array of permission strings
-  users       User[]   @relation("UserRoles")
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-
-  @@index([roleName])
-}
-
 model User {
   id            String    @id @default(cuid())
   name          String
@@ -95,7 +64,6 @@ model User {
   roleId        String?
 }
 
-
 model Blog {
   id            String       @id @default(cuid())
   title         String
@@ -117,34 +85,17 @@ model Blog {
   updatedAt     DateTime     @updatedAt
 }
 
-model Fuel {
-  id        String    @id @default(cuid())
-  name     String    @unique
-  slug      String    @unique
-  products  Product[]
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
-}
-model Make {
-  id        String    @id @default(cuid())
-  name     String    @unique
-  imageUrl  String
-  slug      String    @unique
-  products  Product[]
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
-}
-
 model Product {
   id            String    @id @default(cuid())
   name          String
   description   String?
   imageUrls     String[]
   price         Float
+  imageUrl      String @default("https://m4qmddpomt.ufs.sh/f/KFE5hSPDSMcNdea3tWBy1pmQs9ORlqTbXge7rCGczU8ZifJa")
   engine        String
   color         String
   status        ProductStatus @default(IN_STOCK)
-   usage          ProductUsage @default(NEW)
+  usage          ProductUsage @default(NEW)
   rating        Float     @default(0)
   category      Category  @relation(fields: [categoryId], references: [id],onDelete: Cascade)
   categoryId    String
@@ -156,20 +107,13 @@ model Product {
   modelId    String
   make          Make  @relation(fields: [makeId], references: [id],onDelete: Cascade)
   makeId    String
-  sterring    Steering @default(RIGHT)
+  steering    SteeringType @default(RIGHT)
   fuel          Fuel  @relation(fields: [fuelId], references: [id],onDelete: Cascade)
   fuelId        String
-  unitId        String?
   reviews       Review[]
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
   orderItems    OrderItem[]
-}
-
-enum ProductStatus {
-  IN_STOCK
-  OUT_OF_STOCK
-  ON_SALE
 }
 
 model Order {
@@ -230,6 +174,28 @@ model Notification {
 
 
 // done models
+model Make {
+  id        String    @id @default(cuid())
+  name     String    @unique
+  imageUrl  String
+  slug      String    @unique
+  products  Product[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+enum ProductStatus {
+  IN_STOCK
+  OUT_OF_STOCK
+  ON_SALE
+}
+model Fuel {
+  id        String    @id @default(cuid())
+  name     String    @unique
+  slug      String    @unique
+  products  Product[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
 model Model {
   id        String    @id @default(cuid())
   name     String    @unique
@@ -278,4 +244,33 @@ model Type {
   products  Product[]
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
+}
+model Role {
+  id          String   @id @default(cuid())
+  displayName String // Human-readable name (e.g., "Store Manager")
+  roleName    String   @unique // System name (e.g., "store_manager")
+  description String?
+  permissions String[] // Array of permission strings
+  users       User[]   @relation("UserRoles")
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([roleName])
+}
+enum UserRole {
+  USER
+  DEALER
+  ADMIN
+  SUPER_ADMIN
+}
+enum OrderStatus {
+  PENDING
+  CONFIRMED
+  DELIVERED
+  CANCELLED
+}
+enum SteeringType {
+  LEFT
+  RIGHT
+  CENTER
 }

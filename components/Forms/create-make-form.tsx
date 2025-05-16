@@ -15,72 +15,60 @@ import { useForm } from "react-hook-form";
 
 import { generateSlug } from "@/lib/generateSlug";
 import toast from "react-hot-toast";
-import { Category, Fuel } from "@prisma/client";
-import { CategoryProps } from "@/types/types";
+import { Make } from "@prisma/client";
 import FormHeader from "./FormHeader";
 import TextInput from "../FormInputs/TextInput";
-import TextArea from "../FormInputs/TextAreaInput";
 import ImageInput from "../FormInputs/ImageInput";
 import FormFooter from "./FormFooter";
-import { createCategory, updateCategoryById } from "@/actions/categories";
-import { useCategories } from "@/hooks/useCategories";
+import { updateMakeById } from "@/actions/make";
 
-export type SelectOptionProps = {
-  label: string;
-  value: string;
-};
-type CategoryFormProps = {
+type MakeFormProps = {
   editingId?: string | undefined;
-  initialData?: Category | undefined | null;
-  createCategory?:any
+  initialData?: Make | undefined | null;
+  createMake?: any;
 };
-export default function CategoryForm({
+
+export default function MakeForm({
   editingId,
-  createCategory,
+  createMake,
   initialData,
-}: CategoryFormProps) {
+}: MakeFormProps) {
   const {
     register,
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm<CategoryProps>({
+  } = useForm<any>({
     defaultValues: {
-      name: initialData?.name
+      name: initialData?.name,
     },
   });
+
   const router = useRouter();
-      
   const [loading, setLoading] = useState(false);
   const initialImage = initialData?.imageUrl || "/placeholder.svg";
   const [imageUrl, setImageUrl] = useState(initialImage);
 
-  async function saveCategory(data: CategoryProps) {
+  async function saveMake(data: any) {
     try {
       setLoading(true);
       data.slug = generateSlug(data.name);
       data.imageUrl = imageUrl;
 
       if (editingId) {
-        await updateCategoryById(editingId, data);
+        await updateMakeById(editingId, data);
         setLoading(false);
-        // Toast
-        toast.success("Updated Successfully!");
-        //reset
+        toast.success("Make updated successfully!");
         reset();
-        //route
-        router.push("/dashboard/categories");
+        router.push("/dashboard/make");
         setImageUrl("/placeholder.svg");
       } else {
-        createCategory(data);
+        createMake(data);
         setLoading(false);
-        // Toast
-        toast.success("Successfully Created!");
-        //reset
+        toast.success("Make created successfully!");
         reset();
         setImageUrl("/placeholder.svg");
-        //route
-        router.push("/dashboard/categories");
+        router.push("/dashboard/make");
         router.refresh;
       }
     } catch (error) {
@@ -88,14 +76,13 @@ export default function CategoryForm({
       console.log(error);
     }
   }
-  console.log(status);
 
   return (
-    <form className="" onSubmit={handleSubmit(saveCategory)}>
+    <form onSubmit={handleSubmit(saveMake)}>
       <FormHeader
-        href="/categories"
+        href="/make"
         parent=""
-        title="Category"
+        title="Make"
         editingId={editingId}
         loading={loading}
       />
@@ -104,7 +91,7 @@ export default function CategoryForm({
         <div className="lg:col-span-8 col-span-full space-y-3">
           <Card>
             <CardHeader>
-              <CardTitle></CardTitle>
+              <CardTitle>Make Information</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="grid gap-6">
@@ -112,7 +99,7 @@ export default function CategoryForm({
                   <TextInput
                     register={register}
                     errors={errors}
-                    label="Category Title"
+                    label="Make Name"
                     name="name"
                   />
                 </div>
@@ -120,22 +107,23 @@ export default function CategoryForm({
             </CardContent>
           </Card>
         </div>
-        <div className="lg:col-span-4 col-span-full ">
-          <div className="grid auto-rows-max items-start gap-4 ">
+        <div className="lg:col-span-4 col-span-full">
+          <div className="grid auto-rows-max items-start gap-4">
             <ImageInput
-              title="Category Image"
+              title="Make Image"
               imageUrl={imageUrl}
               setImageUrl={setImageUrl}
-              endpoint="categoryImage"
+              endpoint="makeImage"
             />
           </div>
         </div>
       </div>
+
       <FormFooter
-        href="/categories"
+        href="/make"
         editingId={editingId}
         loading={loading}
-        title="Category"
+        title="Make"
         parent=""
       />
     </form>

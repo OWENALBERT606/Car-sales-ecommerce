@@ -15,7 +15,7 @@ import { useForm } from "react-hook-form";
 
 import { generateSlug } from "@/lib/generateSlug";
 import toast from "react-hot-toast";
-import { Category } from "@prisma/client";
+import { Category, Type } from "@prisma/client";
 import { CategoryProps } from "@/types/types";
 import FormHeader from "./FormHeader";
 import TextInput from "../FormInputs/TextInput";
@@ -32,7 +32,7 @@ export type SelectOptionProps = {
 };
 type CarTypeFormProps = {
   editingId?: string | undefined;
-  initialData?: Category | undefined | null;
+  initialData?: Type | undefined | null;
   createType?:any
 };
 export default function CarTypeForm({

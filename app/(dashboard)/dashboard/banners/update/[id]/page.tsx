@@ -1,5 +1,6 @@
-import { getCategoryById } from "@/actions/savings";
-import CategoryForm from "@/components/Forms/CategoryForm";
+// import { getCategoryById } from "@/actions/savings";
+import { getBannerById } from "@/actions/banners";
+import CreateBannerForm from "@/components/Forms/create-banner-form";
 import React from "react";
 
 export default async function page({
@@ -8,10 +9,10 @@ export default async function page({
   params: Promise<{ id: string }>;
 }) {
   const id = (await params).id;
-  const category = await getCategoryById(id);
+  const banner = await getBannerById(id);
   return (
     <div className="p-8">
-      <CategoryForm initialData={category} editingId={id} />
+      <CreateBannerForm initialData={banner} editingId={id} />
     </div>
   );
 }

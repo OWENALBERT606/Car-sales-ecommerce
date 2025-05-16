@@ -1,4 +1,5 @@
-import { getCategoryById } from "@/actions/savings";
+
+import { getCategoryById } from "@/actions/categories";
 import CategoryForm from "@/components/Forms/CategoryForm";
 import React from "react";
 

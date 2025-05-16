@@ -94,6 +94,16 @@ export const permissions: ModulePermissions[] = [
       delete: "fuels.delete",
     },
   },
+   {
+    display: "Make",
+    name: "make",
+    permissions: {
+      create: "make.create",
+      read: "make.read",
+      update: "make.update",
+      delete: "make.delete",
+    },
+  },
   {
     display: "Customers",
     name: "customers",

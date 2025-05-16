@@ -94,6 +94,11 @@ export const sidebarLinks: ISidebarLink[] = [
         permission: "years.read",
       },
        {
+        title: "Make",
+        href: "/dashboard/make",
+        permission: "make.read",
+      },
+       {
         title: "Fuels",
         href: "/dashboard/fuels",
         permission: "fuels.read",

@@ -1,4 +1,4 @@
-import { ProductStatus, Role, User } from "@prisma/client";
+import { ProductStatus, ProductUsage, Role, User } from "@prisma/client";
 
 export type CategoryProps = {
   name: string;
@@ -98,11 +98,22 @@ export type MutationResponse = {
 export type ProductProps = {
   name: string;
   description: string | null;
-  imageUrl: string;
   price: number;
+  engine:string;
+  imageUrl: string;
+  color: string;
   imageUrls: string[];
   discountedPrice: number | null;
-  status: ProductStatus;   // <- make required
+  status: ProductStatus; 
+  usage:ProductUsage;
+  typeId:string;
+  yearId:string;
+  modelId:string;
+  makeId:string;
+  steering:string;
+  fuelId:string;
+
+
   rating: number;
   categoryId: string;
   unitId: string | null;

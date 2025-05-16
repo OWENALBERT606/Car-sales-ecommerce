@@ -25,6 +25,11 @@ import { updateProductById } from "@/actions/products";
 import FormSelectInput from "../FormInputs/FormSelectInput";
 import { useProducts } from "@/hooks/useProducts";
 import MultipleImageInput from "../FormInputs/MultipleImageInput";
+import { useTypes } from "@/hooks/useTypes";
+import { useYears } from "@/hooks/useYears";
+import { useModels } from "@/hooks/useModels";
+import { useMakes } from "@/hooks/useMake";
+import { useFuels } from "@/hooks/useFuels";
 
 export type SelectOptionProps = {
   label: string;
@@ -52,10 +57,28 @@ export default function ProductForm({
   const {createProduct}=useProducts();
   const router = useRouter();
   const {categories,isLoading} =useCategories();
-  const producTypes=[
-    { label: "Local", value:"LOCAL" },
-    { label: "Organic", value: "ORGANIC"},
+  const {types} =useTypes();
+  const {years} =useYears();
+  const {models} =useModels();
+  const {makes}=useMakes();
+  const {fuels}=useFuels();
+
+  const productStatus=[
+    { label: "in stock", value:"IN_STOCK" },
+    { label: "Out of stock", value: "OUT_OF_STOCK"},
+    { label: "On Sale", value: "ON_SALE"}
   ]
+
+
+  const productUsage=[
+    { label: "used", value:"USED" },
+    { label: "new", value: "NEW"}
+  ]
+  const productSteering=[
+    { label: "left", value:"Left" },
+    { label: "right", value: "RIGHT"}
+  ]
+
 
   const categoriesData= categories.map((item:any,i:any)=>{
     return(
@@ -65,7 +88,71 @@ export default function ProductForm({
       }
     )
   })
-  const TypesData= producTypes.map((item:any,i:any)=>{
+  const yearsData= years.map((item:any,i:any)=>{
+    return(
+      {
+        label:item.name,
+        value:item.id
+      }
+    )
+  })
+  const modelsData= models.map((item:any,i:any)=>{
+    return(
+      {
+        label:item.name,
+        value:item.id
+      }
+    )
+  })
+  const typesData= types.map((item:any,i:any)=>{
+    return(
+      {
+        label:item.name,
+        value:item.id
+      }
+    )
+  })
+  // const steeringData= types.map((item:any,i:any)=>{
+  //   return(
+  //     {
+  //       label:item.name,
+  //       value:item.id
+  //     }
+  //   )
+  // })
+  const makesData= makes.map((item:any,i:any)=>{
+    return(
+      {
+        label:item.name,
+        value:item.id
+      }
+    )
+  })
+   const fuelsData= fuels.map((item:any,i:any)=>{
+    return(
+      {
+        label:item.name,
+        value:item.id
+      }
+    )
+  })
+  const statusData= productStatus.map((item:any,i:any)=>{
+    return(
+      {
+        label:item.value,
+        value:item.value
+      }
+    )
+  })
+  const usageData= productUsage.map((item:any,i:any)=>{
+    return(
+      {
+        label:item.value,
+        value:item.value
+      }
+    )
+  })
+  const steeringData= productSteering.map((item:any,i:any)=>{
     return(
       {
         label:item.value,
@@ -78,46 +165,59 @@ export default function ProductForm({
   const [loading, setLoading] = useState(false);
   // const [imageUrl, setImageUrl] = useState(initialImage);
   const [imageUrls, setImageUrls] = useState([""]);
+  const initialImage = initialData?.imageUrl || "/placeholder.svg";
+    const [imageUrl, setImageUrl] = useState(initialImage);
   
   const [selectedCategory,setSelectedCategory]=useState<any>(categoriesData[0]);
-  const [selectedType,setSelectedType]=useState<any>(TypesData[0]);
+  const [selectedType,setSelectedType]=useState<any>(typesData[0]);
+  const [selectedYear,setSelectedYear]=useState<any>(yearsData[0]);
+  const [selectedFuel,setSelectedFuel]=useState<any>(fuelsData[0]);
+  const [selectedMake,setSelectedMake]=useState<any>(makesData[0]);
+  const [selectedModel,setSelectedModel]=useState<any>(modelsData[0]);
+  const [selectedUsage,setSelectedUsage]=useState<any>(usageData[0]);
+  const [selectedStatus,setSelectedStatus]=useState<any>(statusData[0]);
+  const [selectedSteering,setSelectedSteering]=useState<any>(steeringData[0]);
 
 
   async function saveData(data: ProductProps) {
     try {
       setLoading(true);
-      // data.imageUrl = imageUrl??"";
       data.categoryId=selectedCategory.value
-      // data.type=selectedType.value
       data.status = data.status ?? ProductStatus.IN_STOCK;
-      data.rating = data.rating ?? 0; // just in case
+      data.rating = data.rating ?? 0;
       data.price=Number(data.price);
-      data.discountedPrice=Number(data.discountedPrice);
       data.imageUrls = imageUrls;
+      data.modelId=selectedModel.value;
+      data.fuelId=selectedFuel.value;
+      data.makeId=selectedMake.value;
+      data.yearId=selectedYear.value;
+      data.imageUrl=imageUrl;
+      data.imageUrls=imageUrls;
+      data.steering=selectedSteering.value
 
 
       console.log(data);
 
-      if (editingId) {
-        await updateProductById(editingId, data);
-        setLoading(false); 
-        // Toast
-        toast.success("Updated Successfully!");
-        //reset
-        reset();
-        //route
-        router.push("/dashboard/products");
-      } else {
-        // createProduct(data);
-        setLoading(false);
-        reset();
-        // Toast
-        toast.success("Successfully Created!");
-        //reset
-        // setImageUrl("/placeholder.svg");
-        //route
-        router.push("/dashboard/products");
-      }
+      // if (editingId) {
+      //   await updateProductById(editingId, data);
+      //   setLoading(false); 
+      //   // Toast
+      //   toast.success("Updated Successfully!");
+      //   //reset
+      //   reset();
+      //   //route
+      //   router.push("/dashboard/products");
+      // } else {
+      //   // createProduct(data);
+      //   setLoading(false);
+      //   reset();
+      //   // Toast
+      //   toast.success("Successfully Created!");
+      //   //reset
+      //   // setImageUrl("/placeholder.svg");
+      //   //route
+      //   router.push("/dashboard/products");
+      // }
     } catch (error) {
       setLoading(false);
       // console.log(error);
@@ -157,18 +257,42 @@ export default function ProductForm({
                     name="price"
                     type="number"
                   />
-                  <TextInput
-                    register={register}
-                    errors={errors}
-                    label="Product Discounted Price"
-                    name="discountedPrice"
-                    type="number"
-                  />
+                        
+                         <FormSelectInput
+                                  label="Product status"
+                                  options={statusData}
+                                  option={selectedStatus}
+                                  setOption={setSelectedStatus}
+                                />
+                         <FormSelectInput
+                                  label="Product year"
+                                  options={yearsData}
+                                  option={selectedYear}
+                                  setOption={setSelectedYear}
+                                />
+                         <FormSelectInput
+                                  label="Product Model"
+                                  options={modelsData}
+                                  option={selectedModel}
+                                  setOption={setSelectedModel}
+                                />
+                         <FormSelectInput
+                                  label="Product Steering"
+                                  options={steeringData}
+                                  option={selectedSteering}
+                                  setOption={setSelectedSteering}
+                                />
                          <FormSelectInput
                                   label="Product Type"
-                                  options={TypesData}
+                                  options={typesData}
                                   option={selectedType}
                                   setOption={setSelectedType}
+                                />
+                         <FormSelectInput
+                                  label="Product Fuel"
+                                  options={fuelsData}
+                                  option={selectedFuel}
+                                  setOption={setSelectedFuel}
                                 />
     
                          <FormSelectInput
@@ -177,23 +301,24 @@ export default function ProductForm({
                                   option={selectedCategory}
                                   setOption={setSelectedCategory}
                                 />
+                  
                 </div>
-                <div className="grid gap-3">
-                  <TextArea
+               
+              </div>
+               <TextArea
                     register={register}
                     errors={errors}
                     label="Product Description"
                     name="description"
                   />
-                </div>
-              </div>
             <div className="mt-4">
             <MultipleImageInput
               title="Other Product Images"
               imageUrls={imageUrls}
               setImageUrls={setImageUrls}
-              endpoint="productMultipleImages"
+              endpoint="productImages"
               />
+              
             </div>
             </CardContent>
 
@@ -201,12 +326,41 @@ export default function ProductForm({
         </div>
         <div className="lg:col-span-4 col-span-full ">
           <div className="grid auto-rows-max items-start gap-4 ">
-            {/* <ImageInput
+                           <TextInput
+                    register={register}
+                    errors={errors}
+                    label="Product Engine"
+                    name="engine"
+                  />
+                                 <TextInput
+                    register={register}
+                    errors={errors}
+                    label="Product Color"
+                    name="color"
+                  />
+              <FormSelectInput
+                                  label="Product make"
+                                  options={makesData}
+                                  option={selectedMake}
+                                  setOption={setSelectedMake}
+                                />
+                         <FormSelectInput
+                                  label="Product condition"
+                                  options={usageData}
+                                  option={selectedUsage}
+                                  setOption={setSelectedUsage}
+                                />
+                                <div className="grid gap-3">
+                 
+                </div>
+            <ImageInput
               title="Product Image Image"
               imageUrl={imageUrl}
               setImageUrl={setImageUrl}
               endpoint="productImage"
-            /> */}
+            />
+           
+             
           </div>
         </div>
       </div>

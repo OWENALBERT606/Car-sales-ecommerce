@@ -29,6 +29,7 @@ import { useCategories } from "@/hooks/useCategories";
 import { deleteType } from "@/actions/type";
 import { deleteBanner } from "@/actions/banners";
 import { deleteYear } from "@/actions/years";
+import { deleteMake } from "@/actions/make";
 
 type ActionColumnProps = {
   row: any;
@@ -73,6 +74,12 @@ export default function ActionColumn({
       }
       else if(model==="banner"){
         const res = await deleteBanner(id);
+        if (res?.ok) {
+          window.location.reload();
+        }
+        toast.success(`${model} Deleted Successfully`);
+      }else if(model==="make"){
+        const res = await deleteMake(id);
         if (res?.ok) {
           window.location.reload();
         }

@@ -6,11 +6,14 @@ import { ArrowRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { useBanners } from "@/hooks/useBanners"
 import Link from "next/link"
+import { useMakes } from "@/hooks/useMake"
+// import { useMake } from "@/hooks/useMake"
 
 
 export default function HeroSlider() {
   const [currentSlide, setCurrentSlide] = useState(0)
   const {banners,error}=useBanners();
+
 
 
   useEffect(() => {
@@ -33,7 +36,7 @@ export default function HeroSlider() {
             index === currentSlide ? "opacity-100" : "opacity-0 pointer-events-none"
           }`}
         >
-          <div className="absolute inset-0 bg-gradient-to-r from-red-600/80" />
+          <div className="absolute inset-0 bg-gradient-to-r from-slate-900/90" />
           <Image
             src={slide.imageUrl}
             alt={slide.title}
@@ -41,13 +44,13 @@ export default function HeroSlider() {
             className="object-cover"
             priority={index === 0}
           />
-          <div className="absolute inset-0 bg-gradient-to-r from-red-800/60 to-transparent flex items-center">
+          <div className="absolute inset-0 bg-gradient-to-r from-slate-900/90 to-transparent flex items-center">
             <div className="ml-12 max-w-lg text-white">
               <h2 className="mb-4 text-4xl font-bold leading-tight">{slide.title}</h2>
               <p className="mb-6 text-sm text-gray-200">{slide.description}</p>
               <div className="mb-6 flex items-center gap-3">
               </div>
-              <Button asChild className="bg-red-600 hover:bg-red-700">
+              <Button asChild className="bg-red-700 hover:bg-red-500">
                 <Link href={`/categories/{slide.categoryId}`}> View {slide.category.name}
                    <ArrowRight className="ml-2 h-4 w-4" />
                 </Link>

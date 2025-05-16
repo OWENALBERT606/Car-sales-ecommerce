@@ -12,13 +12,19 @@ export const ourFileRouter = {
       return { uploadedBy: "Admin" };
     }
   ),
-  productImage: f({ image: { maxFileSize: "1MB" } }).onUploadComplete(
+  makeImage: f({ image: { maxFileSize: "1MB" } }).onUploadComplete(
     async ({ metadata, file }) => {
       console.log("file url", file.url);
       return { uploadedBy: "Admin" };
     }
   ),
-  productMultipleImages: f({ image: { maxFileSize: "4MB",maxFileCount:3  } }).onUploadComplete(
+  productImages: f({ image: { maxFileSize: "8MB" ,maxFileCount:12} }).onUploadComplete(
+    async ({ metadata, file }) => {
+      console.log("file url", file.url);
+      return { uploadedBy: "Admin" };
+    }
+  ),
+  productImage: f({ image: { maxFileSize: "1MB"} }).onUploadComplete(
     async ({ metadata, file }) => {
       console.log("file url", file.url);
       return { uploadedBy: "Admin" };
