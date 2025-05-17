@@ -63,6 +63,13 @@ export async function getProductById(id: string) {
     const product = await db.product.findUnique({
       where: {
         id,
+      },include:{
+          make:true,
+        category:true,
+        type:true,
+        year:true,
+        model:true,
+        fuel:true
       }
     });
     return product;

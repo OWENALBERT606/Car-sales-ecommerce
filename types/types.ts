@@ -97,7 +97,7 @@ export type MutationResponse = {
 
 export type ProductProps = {
   name: string;
-  description: string | null;
+  description: any;
   price: number;
   engine:string;
   imageUrl: string;

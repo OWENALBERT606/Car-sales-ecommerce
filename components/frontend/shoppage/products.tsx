@@ -25,6 +25,7 @@ export default function Products({ products,categories}: { products: any[] ,cate
   const [hasMore, setHasMore] = useState(true)
   const [priceRange, setPriceRange] = useState([0, 100000]);
   const loaderRef = useRef<HTMLDivElement | null>(null)
+  
 
   // Sorting logic
   const sortProducts = (prods: any[]) => {
@@ -254,7 +255,7 @@ export default function Products({ products,categories}: { products: any[] ,cate
         </div>
           
           </div> */}
-            <div className="space-y-6">
+       <div className="space-y-6">
       <div className="rounded-lg border border-gray-200 bg-white p-4">
         <p className="text-sm text-gray-600">
           Find your perfect vehicle by filtering our extensive inventory of quality cars. 
@@ -360,7 +361,7 @@ export default function Products({ products,categories}: { products: any[] ,cate
         </div>
         <div className="flex items-center justify-between">
           <span className="text-sm">
-            Price: ${priceRange[0].toLocaleString()} — ${priceRange[1].toLocaleString()}
+            Price: <span className="text-red-600 font-medium">${priceRange[0].toLocaleString()} — ${priceRange[1].toLocaleString()}</span>
           </span>
           <Button variant="outline" size="sm" className="h-8 text-xs border-red-600 text-red-600 hover:bg-red-50">
             Filter
@@ -405,7 +406,7 @@ export default function Products({ products,categories}: { products: any[] ,cate
       </div>
 
       <div className="space-y-4 rounded-lg border border-gray-200 bg-white p-4">
-        <h3 className="font-medium">Steering Type</h3>
+        <h3 className="font-medium text-red-800">Steering Type</h3>
         <div className="space-y-2">
           <label className="flex items-center gap-2 text-sm">
             <Checkbox id="right" />
@@ -423,7 +424,7 @@ export default function Products({ products,categories}: { products: any[] ,cate
       </div>
 
       <div className="space-y-4 rounded-lg border border-gray-200 bg-white p-4">
-        <h3 className="font-medium">Availability</h3>
+        <h3 className="font-medium text-red-800">Availability</h3>
         <div className="space-y-2">
           <label className="flex items-center gap-2 text-sm">
             <Checkbox id="in-stock" />
@@ -567,3 +568,4 @@ export default function Products({ products,categories}: { products: any[] ,cate
     </div>
   )
 }
+
