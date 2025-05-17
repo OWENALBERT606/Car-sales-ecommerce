@@ -75,7 +75,7 @@ export default function ProductForm({
     { label: "new", value: "NEW"}
   ]
   const productSteering=[
-    { label: "left", value:"Left" },
+    { label: "left", value:"LEFT" },
     { label: "right", value: "RIGHT"}
   ]
 
@@ -165,7 +165,8 @@ export default function ProductForm({
   const [loading, setLoading] = useState(false);
   // const [imageUrl, setImageUrl] = useState(initialImage);
   const [imageUrls, setImageUrls] = useState([""]);
-  const initialImage = initialData?.imageUrl || "/placeholder.svg";
+  const initialImage = initialData?.imageUrl && initialData.imageUrl !== "" ? initialData.imageUrl : "/placeholder.svg";
+
     const [imageUrl, setImageUrl] = useState(initialImage);
   
   const [selectedCategory,setSelectedCategory]=useState<any>(categoriesData[0]);
@@ -179,13 +180,14 @@ export default function ProductForm({
   const [selectedSteering,setSelectedSteering]=useState<any>(steeringData[0]);
 
 
-  async function saveData(data: ProductProps) {
+  async function saveData(data:any) {
     try {
       setLoading(true);
       data.categoryId=selectedCategory.value
       data.status = data.status ?? ProductStatus.IN_STOCK;
       data.rating = data.rating ?? 0;
       data.price=Number(data.price);
+      data.qty=Number(data.qty);
       data.imageUrls = imageUrls;
       data.modelId=selectedModel.value;
       data.fuelId=selectedFuel.value;
@@ -194,30 +196,32 @@ export default function ProductForm({
       data.imageUrl=imageUrl;
       data.imageUrls=imageUrls;
       data.steering=selectedSteering.value
+      data.typeId = selectedType.value;
+      data.usage = selectedUsage.value;
 
 
       console.log(data);
 
-      // if (editingId) {
-      //   await updateProductById(editingId, data);
-      //   setLoading(false); 
-      //   // Toast
-      //   toast.success("Updated Successfully!");
-      //   //reset
-      //   reset();
-      //   //route
-      //   router.push("/dashboard/products");
-      // } else {
-      //   // createProduct(data);
-      //   setLoading(false);
-      //   reset();
-      //   // Toast
-      //   toast.success("Successfully Created!");
-      //   //reset
-      //   // setImageUrl("/placeholder.svg");
-      //   //route
-      //   router.push("/dashboard/products");
-      // }
+      if (editingId) {
+        await updateProductById(editingId, data);
+        setLoading(false); 
+        // Toast
+        toast.success("Updated Successfully!");
+        //reset
+        reset();
+        //route
+        router.push("/dashboard/products");
+      } else {
+        createProduct(data);
+        setLoading(false);
+        reset();
+        // Toast
+        toast.success("Successfully Created!");
+        //reset
+        // setImageUrl("/placeholder.svg");
+        //route
+        router.push("/dashboard/products");
+      }
     } catch (error) {
       setLoading(false);
       // console.log(error);
@@ -255,6 +259,13 @@ export default function ProductForm({
                     errors={errors}
                     label="Product Price"
                     name="price"
+                    type="number"
+                  />
+                  <TextInput
+                    register={register}
+                    errors={errors}
+                    label="Quantity Available"
+                    name="qty"
                     type="number"
                   />
                         

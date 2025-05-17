@@ -103,7 +103,6 @@ export type ProductProps = {
   imageUrl: string;
   color: string;
   imageUrls: string[];
-  discountedPrice: number | null;
   status: ProductStatus; 
   usage:ProductUsage;
   typeId:string;
@@ -112,8 +111,6 @@ export type ProductProps = {
   makeId:string;
   steering:string;
   fuelId:string;
-
-
   rating: number;
   categoryId: string;
   unitId: string | null;

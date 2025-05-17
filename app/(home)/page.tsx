@@ -39,7 +39,6 @@ export default function page() {
         </div>
         <TrendingProductCarousel/>
         <CarMakeCarousel carMakes={makes} />
-        {/* <LocationSlider locations={locations}/> */}
         <div className="">
           <h2 className="mb-6 text-2xl font-bold">Special Offers</h2>
           <PromotionalBanners banners={banners}/>

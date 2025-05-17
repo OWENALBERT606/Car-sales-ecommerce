@@ -94,6 +94,7 @@ model Product {
   imageUrl      String @default("https://m4qmddpomt.ufs.sh/f/KFE5hSPDSMcNdea3tWBy1pmQs9ORlqTbXge7rCGczU8ZifJa")
   engine        String
   color         String
+  qty           Float @default(1)
   status        ProductStatus @default(IN_STOCK)
   usage          ProductUsage @default(NEW)
   rating        Float     @default(0)

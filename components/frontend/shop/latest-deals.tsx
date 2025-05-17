@@ -116,7 +116,7 @@ export default function LatestDeals({products}:{products:any}) {
               {/* Price */}
               <div className="mb-4 flex items-center gap-2">
                 <span className="text-sm text-gray-500 line-through">${deal.price}</span>
-                <span className="text-xl font-bold text-green-600">${deal.discountedPrice} per {deal.unit.prefix}</span>
+                <span className="text-xl font-bold text-green-600">${deal.discountedPrice}</span>
               </div>
 
               {/* Stock Indicator */}

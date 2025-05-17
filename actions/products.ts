@@ -26,6 +26,15 @@ export async function getAllProducts():Promise<QueriesResponse>{
     const products = await db.product.findMany({
       orderBy: {
         createdAt: "desc",
+      },include:{
+        make:true,
+        category:true,
+        type:true,
+        year:true,
+        model:true,
+        fuel:true
+
+
       }
     });
 

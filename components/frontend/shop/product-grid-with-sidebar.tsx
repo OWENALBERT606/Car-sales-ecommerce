@@ -107,9 +107,8 @@ export default function ProductGridWithSidebar({products}:{products:any}) {
                 {/* Price */}
                 <div className="mb-3 flex items-center gap-2">
                   <span className="text-xs text-gray-500 line-through">UGX-{product.price}</span>
-                  <span className="text-sm font-bold text-green-600">UGX-{product.discountedPrice} per{product.unit.prefix}</span>
+                  <span className="text-sm font-bold text-green-600">UGX-{product.discountedPrice}</span>
                 </div>
-
                 {/* Stock Status */}
                 <div className="flex items-center justify-between">
                   <Button size="sm" className="w-full bg-green-600 hover:bg-green-700">

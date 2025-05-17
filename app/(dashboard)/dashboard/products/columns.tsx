@@ -44,12 +44,16 @@ export const columns: ColumnDef<Product>[] = [
     header: ({ column }) => <SortableColumn column={column} title="Name" />,
   },
   {
-    accessorKey: "farm.name",
-    header: ({ column }) => <SortableColumn column={column} title="Farm" />,
+    accessorKey: "make.name",
+    header: ({ column }) => <SortableColumn column={column} title="Car Make" />,
   },
   {
-    accessorKey: "products.length",
-    header: ({ column }) => <SortableColumn column={column} title="Products" />,
+    accessorKey: "usage",
+    header: ({ column }) => <SortableColumn column={column} title="Car Condition" />,
+  },
+  {
+    accessorKey: "price",
+    header: ({ column }) => <SortableColumn column={column} title="Price" />,
   },
 
   {

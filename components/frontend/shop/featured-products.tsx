@@ -107,77 +107,71 @@ export default function FeaturedProducts({ products, categories }: FeaturedProdu
       ) : (
         <>
           {/* Products Grid */}
-          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-            {filteredProducts.slice(0,4).map((product:any) => (
-              <Link href={`/shop/${product.id}`} key={product.id} className="">
-                <div key={product.id} className="group relative rounded-lg border border-gray-200 bg-white p-4 shadow-sm transition-shadow hover:shadow-md">
-                {/* Discount Badge */}
-                {product.discountedPrice && product.discountedPrice < product.price && (
-                  <div className="absolute left-3 top-3 z-10 rounded bg-green-500 px-2 py-1 text-xs font-bold text-white">
-                    {Math.round(((product.price - product.discountedPrice) / product.price) * 100)}%
-                  </div>
-                )}
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6">
+            {filteredProducts.slice(0,6).map((product:any) => (
+              <Link href={`/shop/${product.id}`} key={product.id} className="block w-36 sm:w-40 md:w-44">
+  <div key={product.id} className="group relative h-full rounded-lg border border-gray-200 bg-white shadow-sm transition-shadow hover:shadow-md flex flex-col">
+    {/* Discount Badge */}
+    {product.discountedPrice && product.discountedPrice < product.price && (
+      <div className="absolute left-1 top-1 z-10 rounded bg-green-500 px-1 py-0.5 text-xs font-bold text-white">
+        {Math.round(((product.price - product.discountedPrice) / product.price) * 100)}%
+      </div>
+    )}
 
-                {/* Wishlist Button */}
-                <button className="absolute right-3 top-3 z-10 rounded-full bg-white p-1.5 text-gray-400 shadow-sm hover:text-green-500">
-                  <Heart className="h-5 w-5" />     
-                </button>
+    {/* Wishlist Button */}
+    <button className="absolute right-1 top-1 z-10 rounded-full bg-white p-1 text-gray-400 shadow-sm hover:text-green-500">
+      <Heart className="h-3 w-3" />     
+    </button>
 
-                {/* Product Image */}
-                <div className="mb-4 flex h-48 items-center justify-center overflow-hidden rounded-md bg-gray-50">
-                  <Image
-                    src={product.imageUrl || product.imageUrls?.[0] || "/placeholder.svg"}
-                    alt={product.name}
-                    width={200}
-                    height={200}
-                    className="h-auto max-h-full w-auto max-w-full object-contain transition-transform group-hover:scale-105"
-                  />
-                </div>
+    {/* Product Image - Full Width */}
+    <div className="overflow-hidden">
+      <div className="h-32 w-full bg-gray-50">
+        <Image
+          src={product.imageUrl || product.imageUrls?.[0] || "/placeholder.svg"}
+          alt={product.name}
+          width={160}
+          height={128}
+          className="h-full w-full object-cover transition-transform group-hover:scale-105"
+        />
+      </div>
+    </div>
 
-                {/* Product Info */}
-                <div className="mb-2">
-                  <h3 className="text-sm font-medium">{product.name}</h3>
-                </div>
+    {/* Product Info */}
+    <div className="p-2 flex flex-col flex-grow">
+      <h3 className="mb-1 text-xs font-medium text-red-600 line-clamp-1">{product.name}</h3>
+      
+      <div className="mb-1 flex items-center">
+        <div className="flex scale-75 origin-left">{renderStars(product.rating)}</div>
+        <span className="ml-1 text-xs text-gray-500">
+          {product.reviews?.length || 0}
+        </span>
+      </div>
 
-                {/* Ratings */}
-                <div className="mb-3 flex items-center">
-                  <div className="flex">{renderStars(product.rating)}</div>
-                  <span className="ml-2 text-xs text-gray-500">
-                    {product.reviews?.length || 0} reviews
-                  </span>
-                </div>
-                <span>{product.description.substring(0, 60)}</span>
+      {/* Price */}
+      <div className="mb-1">
+        <span className="text-sm font-bold text-red-600">UGX-{product.price}M</span>
+      </div>
 
-                {/* Price */}
-                <div className="mb-3 flex items-center gap-2">
-                  {product.discountedPrice && product.discountedPrice < product.price ? (
-                    <>
-                      <span className="text-xs text-gray-500 line-through">UGX-{product.price}</span>
-                      <span className="text-sm font-bold text-green-600">UGX-{product.discountedPrice} per {product.unit.prefix}</span>
-                    </>
-                  ) : (
-                    <span className="text-lg font-bold text-green-600">UGX-{product.price} per{product.unit.prefix}</span>
-                  )}
-                </div>
-
-                {/* Actions */}
-                <div className="flex items-center justify-between">
-                  <Button size="sm" variant="outline" className="rounded-full">
-                    <ShoppingCart className="mr-1 h-4 w-4" />
-                    Add
-                  </Button>
-                  <span className={`flex items-center text-xs UGX{
-                    product.status === "IN_STOCK" ? "text-green-600" : "text-orange-600"
-                  }`}>
-                    <span className={`mr-1 h-2 w-2 rounded-full UGX{
-                      product.status === "IN_STOCK" ? "bg-green-500" : "bg-orange-500"
-                    }`} />
-                    {product.status === "IN_STOCK" ? "In Stock" : "Low Stock"}
-                  </span>
-                </div>
-              </div>
-
-              </Link>
+      {/* Actions */}
+      <div className="mt-auto flex items-center justify-between">
+        <Button size="sm" variant="outline" className="h-6 w-16 rounded-full bg-red-600 text-white hover:bg-red-700 text-xs px-1">
+          <ShoppingCart className="mr-1 h-3 w-3" />
+          Add
+        </Button>
+        <span className={`flex items-center text-xs ${
+          product.status === "IN_STOCK" ? "text-green-600" : "text-orange-600"
+        }`}>
+          <span className={`mr-0.5 h-1 w-1 rounded-full ${
+            product.status === "IN_STOCK" ? "bg-green-500" : "bg-orange-500"
+          }`} />
+          <span className="text-xs">
+            {product.status === "IN_STOCK" ? "In" : "Low"}
+          </span>
+        </span>
+      </div>
+    </div>
+  </div>
+</Link>
             ))}
           </div>
 
