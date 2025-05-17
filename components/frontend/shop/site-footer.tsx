@@ -13,19 +13,18 @@ export default function SiteFooter() {
             <div>
               <div className="mb-6 flex items-center">
                 <div className="relative h-8 w-8 mr-2">
-                  <div className="absolute h-8 w-8 rounded-full bg-red-500"></div>
+                  <div className="absolute h-8 w-8 rounded-full bg-red-600"></div>
                   <div className="absolute left-1 top-1 h-6 w-6 rounded-full bg-black"></div>
                 </div>
-                <span className="text-xl font-bold">FarmConnect</span>
+                <span className="text-xl font-bold">Nagotal Motors</span>
               </div>
 
               <p className="mb-4 text-sm text-gray-600">
-                Connecting farmers directly to consumers. Fresh produce, fair prices, and sustainable practices for a
-                better agricultural ecosystem.
+                Your trusted partner for high-quality new and pre-owned cars. Explore our wide selection and drive away with confidence.
               </p>
 
-              <Link href="mailto:info@farmconnect.com" className="text-sm font-medium text-red-500 hover:underline">
-                info@farmconnect.com
+              <Link href="mailto:info@nagotalmotors.com" className="text-sm font-medium text-red-600 hover:underline">
+                info@nagotalmotors.com
               </Link>
             </div>
 
@@ -34,17 +33,17 @@ export default function SiteFooter() {
               <h3 className="mb-6 text-lg font-medium text-gray-900">Need Help?</h3>
 
               <div className="mb-4 flex items-center">
-                <Phone className="mr-2 h-5 w-5 text-green-600" />
-                <span className="text-lg font-medium">(+800) 1234 5678 90</span>
+                <Phone className="mr-2 h-5 w-5 text-red-600" />
+                <span className="text-lg font-medium">+256 701 234 567</span>
               </div>
 
               <div className="mb-4 text-sm text-gray-600">
-                <p>Monday – Friday: 9:00–20:00</p>
-                <p>Saturday: 11:00 – 15:00</p>
+                <p>Monday – Friday: 8:00–18:00</p>
+                <p>Saturday: 9:00 – 14:00</p>
               </div>
 
-              <Link href="mailto:support@farmconnect.com" className="text-sm font-medium text-red-500 hover:underline">
-                support@farmconnect.com
+              <Link href="mailto:support@nagotalmotors.com" className="text-sm font-medium text-red-600 hover:underline">
+                support@nagotalmotors.com
               </Link>
             </div>
 
@@ -54,81 +53,76 @@ export default function SiteFooter() {
 
               <ul className="space-y-3 text-sm">
                 <li>
-                  <Link href="/help-center" className="text-gray-600 hover:text-green-600">
+                  <Link href="/help-center" className="text-gray-600 hover:text-red-600">
                     Help Center
                   </Link>
                 </li>
                 <li>
-                  <Link href="/account" className="text-gray-600 hover:text-green-600">
-                    My account
+                  <Link href="/my-account" className="text-gray-600 hover:text-red-600">
+                    My Account
                   </Link>
                 </li>
                 <li>
-                  <Link href="/track-orders" className="text-gray-600 hover:text-green-600">
+                  <Link href="/track-orders" className="text-gray-600 hover:text-red-600">
                     Track Orders
                   </Link>
                 </li>
                 <li>
-                  <Link href="/my-orders" className="text-gray-600 hover:text-green-600">
-                    My Orders
+                  <Link href="/test-drive" className="text-gray-600 hover:text-red-600">
+                    Book a Test Drive
                   </Link>
                 </li>
                 <li>
-                  <Link href="/wishlist" className="text-gray-600 hover:text-green-600">
-                    Your Wishlist
+                  <Link href="/compare" className="text-gray-600 hover:text-red-600">
+                    Compare Cars
                   </Link>
                 </li>
                 <li>
-                  <Link href="/return-policy" className="text-gray-600 hover:text-green-600">
-                    Return Policy
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/gift-cards" className="text-gray-600 hover:text-green-600">
-                    Buy Gift Cards
+                  <Link href="/financing" className="text-gray-600 hover:text-red-600">
+                    Financing Options
                   </Link>
                 </li>
               </ul>
             </div>
 
-            {/* Store Information */}
+            {/* Company Info */}
             <div>
-              <h3 className="mb-6 text-lg font-medium text-gray-900">Farm Information</h3>
+              <h3 className="mb-6 text-lg font-medium text-gray-900">Company</h3>
 
               <ul className="space-y-3 text-sm">
                 <li>
-                  <Link href="/about" className="text-gray-600 hover:text-green-600">
-                    About FarmConnect
+                  <Link href="/about" className="text-gray-600 hover:text-red-600">
+                    About Nagotal Motors
                   </Link>
                 </li>
                 <li>
-                  <Link href="/bestsellers" className="text-gray-600 hover:text-green-600">
-                    Bestsellers
+                  <Link href="/inventory" className="text-gray-600 hover:text-red-600">
+                    Browse Inventory
                   </Link>
                 </li>
                 <li>
-                  <Link href="/latest-products" className="text-gray-600 hover:text-green-600">
-                    Latest Harvests
+                  <Link href="/latest-arrivals" className="text-gray-600 hover:text-red-600">
+                    Latest Arrivals
                   </Link>
                 </li>
                 <li>
-                  <Link href="/seasonal-discounts" className="text-gray-600 hover:text-green-600">
-                    Seasonal Discounts
+                  <Link href="/offers" className="text-gray-600 hover:text-red-600">
+                    Special Offers
                   </Link>
                 </li>
                 <li>
-                  <Link href="/sale-products" className="text-gray-600 hover:text-green-600">
-                    Sale Products
+                  <Link href="/sell-your-car" className="text-gray-600 hover:text-red-600">
+                    Sell Your Car
                   </Link>
                 </li>
                 <li>
-                  <Link href="/affiliate-program" className="text-gray-600 hover:text-green-600">
-                    Affiliate Program
+                  <Link href="/careers" className="text-gray-600 hover:text-red-600">
+                    Careers
                   </Link>
                 </li>
                 <li>
-                  <Link href="/sell-on-farmconnect" className="text-gray-600 hover:text-green-600">
-                    Sell on FarmConnect
+                  <Link href="/contact" className="text-gray-600 hover:text-red-600">
+                    Contact Us
                   </Link>
                 </li>
               </ul>
@@ -142,14 +136,14 @@ export default function SiteFooter() {
         <div className="container mx-auto grid grid-cols-1 divide-y md:grid-cols-2 md:divide-x md:divide-y-0">
           <div className="flex items-center justify-center p-4 text-center">
             <p className="text-sm font-medium">
-              -5% for all orders this week{" "}
-              <Link href="/shop" className="ml-1 font-bold text-green-600 hover:underline">
-                Shop now
+              Up to $1000 off selected models{" "}
+              <Link href="/offers" className="ml-1 font-bold text-red-600 hover:underline">
+                View Offers
               </Link>
             </p>
           </div>
           <div className="flex items-center justify-center p-4 text-center">
-            <p className="text-sm font-medium">Free delivery for all orders over $200</p>
+            <p className="text-sm font-medium">Free delivery within Kampala & Wakiso districts</p>
           </div>
         </div>
       </div>
@@ -160,30 +154,26 @@ export default function SiteFooter() {
           <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
             {/* Links */}
             <div className="flex flex-wrap gap-4 text-xs text-gray-600">
-              <Link href="/privacy-policy" className="hover:text-green-600">
+              <Link href="/privacy-policy" className="hover:text-red-600">
                 Privacy Policy
               </Link>
-              <Link href="/order-tracking" className="hover:text-green-600">
-                Order Tracking
+              <Link href="/terms-conditions" className="hover:text-red-600">
+                Terms & Conditions
               </Link>
-              <Link href="/terms-conditions" className="hover:text-green-600">
-                Terms and Conditions
-              </Link>
-              <Link href="/refund-policy" className="hover:text-green-600">
-                Refund and Returns Policy
+              <Link href="/refund-policy" className="hover:text-red-600">
+                Return & Refund Policy
               </Link>
             </div>
 
             {/* Copyright */}
-            <div className="text-xs text-gray-500">Copyright 2025 © FarmConnect. All rights reserved.</div>
+            <div className="text-xs text-gray-500">© 2025 Nagotal Motors. All rights reserved.</div>
 
             {/* Payment Methods */}
             <div className="flex items-center gap-2">
-              <Image src="/placeholder.svg?height=30&width=40" alt="Visa" width={40} height={30} />
-              <Image src="/placeholder.svg?height=30&width=40" alt="Mastercard" width={40} height={30} />
-              <Image src="/placeholder.svg?height=30&width=40" alt="PayPal" width={40} height={30} />
-              <Image src="/placeholder.svg?height=30&width=40" alt="Skrill" width={40} height={30} />
-              <Image src="/placeholder.svg?height=30&width=40" alt="Bank Transfer" width={40} height={30} />
+              <Image src="/payments/visa.svg" alt="Visa" width={40} height={30} />
+              <Image src="/payments/mastercard.svg" alt="Mastercard" width={40} height={30} />
+              <Image src="/payments/mobile-money.svg" alt="Mobile Money" width={40} height={30} />
+              <Image src="/payments/bank-transfer.svg" alt="Bank Transfer" width={40} height={30} />
             </div>
           </div>
         </div>

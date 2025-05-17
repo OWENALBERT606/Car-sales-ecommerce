@@ -8,10 +8,12 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-import { Star } from "lucide-react";
+import { Heart, ShoppingCart, Star } from "lucide-react";
 import Link from "next/link";
 import { useRef, useState, useEffect } from "react";
 import type { CarouselApi } from "@/components/ui/carousel";
+import { Button } from "@/components/ui/button";
+import Image from "next/image";
 
 const products = [
   {
@@ -71,7 +73,7 @@ const products = [
   },
 ];
 
-export default function TrendingProductCarousel() {
+export default function TrendingProductCarousel({products}:{products:any}) {
   const [current, setCurrent] = useState(0);
   const [count, setCount] = useState(0);
   const [api, setApi] = useState<CarouselApi>();
@@ -104,8 +106,8 @@ export default function TrendingProductCarousel() {
 
   return (
     <div className="w-full max-w-7xl mx-auto px-4 py-8">
-      <div className="bg-red-600 rounded-t-lg p-4 flex justify-between items-center">
-        <h2 className="text-2xl font-bold text-white">New Arrivals</h2>
+      <div className="bg-red-600 rounded-t-lg p-2 flex justify-between items-center">
+        <h2 className="text-lg font-bold text-white">New Arrivals</h2>
         <Link
           href="/all-products"
           className="text-white flex items-center gap-2 hover:underline"
@@ -117,52 +119,64 @@ export default function TrendingProductCarousel() {
 
       <Carousel setApi={setApi} className="relative">
         <CarouselContent className="-ml-2 md:-ml-4">
-          {products.map((product) => (
+          {products.map((product:any) => (
             <CarouselItem
               key={product.id}
               className="pl-2 md:pl-4 sm:basis-1/2 md:basis-1/3 lg:basis-1/4"
             >
-              <Card className="border rounded-lg overflow-hidden">
-                <CardContent className="p-4">
-                  <div className="relative mb-4">
-                    <img
-                      src={product.image}
-                      alt={product.name}
-                      className="w-full h-48 object-contain"
-                    />
-                    <div className="absolute top-2 right-2 bg-pink-100 text-pink-600 px-2 py-1 rounded-md text-sm">
-                      -{product.discount}%
+                       <Link href={`/shop/${product.id}`} className="block w-36 sm:w-40 md:w-44">
+                <div  className="group relative h-full rounded-lg border border-gray-200 bg-white shadow-sm transition-shadow hover:shadow-md flex flex-col">
+                  {/* Discount Badge */}
+                  {product.discountedPrice && product.discountedPrice < product.price && (
+                    <div className="absolute left-1 top-1 z-10 rounded bg-blue-500 px-1 py-0.5 text-xs font-bold text-white">
+                      {Math.round(((product.price - product.discountedPrice) / product.price) * 100)}%
+                    </div>
+                  )}
+              
+                  {/* Wishlist Button */}
+                  <button className="absolute right-1 top-1 z-10 rounded-full bg-white p-1 text-gray-400 shadow-sm hover:text-blue-500">
+                    <Heart className="h-3 w-3" />     
+                  </button>
+              
+                  {/* Product Image - Full Width */}
+                  <div className="overflow-hidden">
+                    <div className="h-32 w-full bg-gray-50">
+                      <Image
+                        src={product.imageUrl || product.imageUrls?.[0] || "/placeholder.svg"}
+                        alt={product.name}
+                        width={160}
+                        height={128}
+                        className="h-full w-full overflow-hidden object-cover transition-transform group-hover:scale-105"
+                      />
                     </div>
                   </div>
-
-                  <h3 className="font-medium text-sm mb-2 h-12 line-clamp-2">
-                    {product.name}
-                  </h3>
-
-                  <div className="space-y-2">
-                    <div className="flex items-baseline gap-2">
-                      <span className="text-xl font-bold">
-                        ${product.price.toLocaleString()}
-                      </span>
-                      <span className="text-gray-500 line-through text-sm">
-                        ${product.originalPrice.toLocaleString()}
+              
+                  {/* Product Info */}
+                  <div className="p-2 flex flex-col flex-grow">
+                    <h3 className="mb-1 text- font-medium text-red-600 line-clamp-1">{product.name}</h3>
+                    
+                    <div className="mb-1 flex items-center">
+                      <div className="flex scale-75 origin-left">{renderStars(product.rating)}</div>
+                      <span className="ml-1 text-xs text-gray-500">
+                        {product.reviews?.length || 0}
                       </span>
                     </div>
-
-                    <div className="text-green-600 text-sm">
-                      You save $
-                      {(product.originalPrice - product.price).toLocaleString()}
+              
+                    {/* Price */}
+                    <div className="mb-1">
+                      <span className="text-sm font-bold text-red-600">UGX-{product.price}M</span>
                     </div>
-
-                    <div className="flex items-center gap-2">
-                      <div className="flex">{renderStars(product.rating)}</div>
-                      <span className="text-sm text-gray-600">
-                        {product.reviews} Review
-                      </span>
+              
+                    {/* Actions */}
+                    <div className="mt-auto flex items-center w-full justify-between">
+                      <Button size="sm" variant="outline" className="h-6 w-full rounded-full bg-red-600 text-white hover:bg-red-700 text-xs px-1">
+                        <ShoppingCart className="mr-1 h-3 w-3" />
+                        Add
+                      </Button>
                     </div>
                   </div>
-                </CardContent>
-              </Card>
+                </div>
+              </Link>
             </CarouselItem>
           ))}
         </CarouselContent>

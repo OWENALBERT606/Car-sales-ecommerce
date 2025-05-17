@@ -37,15 +37,15 @@ export default function page() {
         <div className="my-6">
           <FeaturedCategories categories={categories} />
         </div>
-        <TrendingProductCarousel/>
+        <TrendingProductCarousel products={products}/>
         <CarMakeCarousel carMakes={makes} />
         <div className="">
           <h2 className="mb-6 text-2xl font-bold">Special Offers</h2>
           <PromotionalBanners banners={banners}/>
         </div>
         <div className="">
-      <div className="container mx-auto px-4 py-4">
-        <h1 className="mb-4 text-3xl font-bold text-gray-900">Farm Connect Marketplace</h1>
+      <div className="container mx-auto px-4 py-4 mt-6">
+        <h1 className="mb-4 text-3xl mt-5 font-bold text-red-600">Latest Category drives</h1>
         <section className="mb-12">
           <FeaturedProducts products={products} categories={categories} />
         </section>

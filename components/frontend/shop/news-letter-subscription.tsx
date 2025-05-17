@@ -41,7 +41,7 @@ export default function NewsletterSubscription() {
               <div className="mr-4 text-gray-400">
                 <Mail className="h-12 w-12" />
               </div>
-              <p className="text-sm font-medium text-green-600">Join our newsletter for $10 off your first order</p>
+              <p className="text-sm font-medium text-red-600">Join our newsletter for $10 off your first order</p>
             </div>
 
             <h3 className="mb-3 text-2xl font-bold text-gray-900">
@@ -61,14 +61,14 @@ export default function NewsletterSubscription() {
                 <input
                   type="email"
                   placeholder="Enter your email address"
-                  className="w-full rounded-md border border-gray-300 px-4 py-3 focus:border-green-500 focus:outline-none focus:ring-1 focus:ring-green-500"
+                  className="w-full rounded-md border border-gray-300 px-4 py-3 focus:border-red-500 focus:outline-none focus:ring-1 focus:ring-red-500"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   required
                 />
                 <Button
                   type="submit"
-                  className="absolute right-1.5 top-1.5 bg-green-500 hover:bg-green-600"
+                  className="absolute right-1.5 top-1.5 bg-red-500 hover:bg-red-600"
                   disabled={isSubmitting}
                 >
                   {isSubmitting ? "Subscribing..." : "Subscribe"}
@@ -76,18 +76,18 @@ export default function NewsletterSubscription() {
               </div>
 
               {isSuccess && (
-                <p className="text-sm text-green-600">
+                <p className="text-sm text-red-600">
                   Thank you for subscribing! Your discount code will be sent to your email.
                 </p>
               )}
 
               <p className="text-xs text-gray-500">
                 By subscribing you agree to our{" "}
-                <Link href="/terms" className="text-green-600 hover:underline">
+                <Link href="/terms" className="text-red-600 hover:underline">
                   Terms & Conditions
                 </Link>{" "}
                 and{" "}
-                <Link href="/privacy" className="text-green-600 hover:underline">
+                <Link href="/privacy" className="text-red-600 hover:underline">
                   Privacy & Cookies Policy.
                 </Link>
               </p>

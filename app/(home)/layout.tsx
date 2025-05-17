@@ -19,7 +19,6 @@ export default async function HomeLayout({
        <TopNavigationBar/>
        <MainNav session={session}/>
       <SecNavigation/>
-      {/* <PromoBanner /> */}
       <div className="hidden">
       <SiteHeader session={session} />
       </div>

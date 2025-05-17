@@ -84,8 +84,8 @@ export default function FeaturedProducts({ products, categories }: FeaturedProdu
             onClick={() => setActiveCategory(category.id)}
             className={`px-4 py-3 text-sm font-medium transition-colors UGX{
               activeCategory === category.id
-                ? "border-b-2 border-green-500 text-green-600"
-                : "text-gray-600 hover:text-green-600"
+                ? "border-b-2 border-blue-500 text-blue-600"
+                : "text-gray-600 hover:text-blue-600"
             }`}
           >
             {category.name}
@@ -93,7 +93,7 @@ export default function FeaturedProducts({ products, categories }: FeaturedProdu
         ))}
 
         <div className="ml-auto flex items-center px-4">
-          <Link href="/shop" className="flex items-center text-sm font-medium text-green-600 hover:underline">
+          <Link href="/shop" className="flex items-center text-sm font-medium text-blue-600 hover:underline">
             View All <span className="ml-1">→</span>
           </Link>
         </div>
@@ -102,7 +102,7 @@ export default function FeaturedProducts({ products, categories }: FeaturedProdu
       {/* Loading State */}
       {isLoading ? (
         <div className="flex justify-center items-center h-64">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-green-500"></div>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500"></div>
         </div>
       ) : (
         <>
@@ -113,13 +113,13 @@ export default function FeaturedProducts({ products, categories }: FeaturedProdu
   <div key={product.id} className="group relative h-full rounded-lg border border-gray-200 bg-white shadow-sm transition-shadow hover:shadow-md flex flex-col">
     {/* Discount Badge */}
     {product.discountedPrice && product.discountedPrice < product.price && (
-      <div className="absolute left-1 top-1 z-10 rounded bg-green-500 px-1 py-0.5 text-xs font-bold text-white">
+      <div className="absolute left-1 top-1 z-10 rounded bg-blue-500 px-1 py-0.5 text-xs font-bold text-white">
         {Math.round(((product.price - product.discountedPrice) / product.price) * 100)}%
       </div>
     )}
 
     {/* Wishlist Button */}
-    <button className="absolute right-1 top-1 z-10 rounded-full bg-white p-1 text-gray-400 shadow-sm hover:text-green-500">
+    <button className="absolute right-1 top-1 z-10 rounded-full bg-white p-1 text-gray-400 shadow-sm hover:text-blue-500">
       <Heart className="h-3 w-3" />     
     </button>
 
@@ -131,7 +131,7 @@ export default function FeaturedProducts({ products, categories }: FeaturedProdu
           alt={product.name}
           width={160}
           height={128}
-          className="h-full w-full object-cover transition-transform group-hover:scale-105"
+          className="h-full w-full overflow-hidden object-cover transition-transform group-hover:scale-105"
         />
       </div>
     </div>
@@ -153,21 +153,21 @@ export default function FeaturedProducts({ products, categories }: FeaturedProdu
       </div>
 
       {/* Actions */}
-      <div className="mt-auto flex items-center justify-between">
-        <Button size="sm" variant="outline" className="h-6 w-16 rounded-full bg-red-600 text-white hover:bg-red-700 text-xs px-1">
+      <div className="mt-auto flex items-center w-full justify-between">
+        <Button size="sm" variant="outline" className="h-6 w-full rounded-full bg-red-600 text-white hover:bg-red-700 text-xs px-1">
           <ShoppingCart className="mr-1 h-3 w-3" />
           Add
         </Button>
-        <span className={`flex items-center text-xs ${
-          product.status === "IN_STOCK" ? "text-green-600" : "text-orange-600"
+        {/* <span className={`flex items-center text-xs ${
+          product.status === "IN_STOCK" ? "text-blue-600" : "text-orange-600"
         }`}>
           <span className={`mr-0.5 h-1 w-1 rounded-full ${
-            product.status === "IN_STOCK" ? "bg-green-500" : "bg-orange-500"
+            product.status === "IN_STOCK" ? "bg-blue-500" : "bg-orange-500"
           }`} />
           <span className="text-xs">
             {product.status === "IN_STOCK" ? "In" : "Low"}
           </span>
-        </span>
+        </span> */}
       </div>
     </div>
   </div>
@@ -191,7 +191,7 @@ export default function FeaturedProducts({ products, categories }: FeaturedProdu
             {[0, 1, 2].map((dot) => (
               <button
                 key={dot}
-                className={`h-2 w-2 rounded-full UGX{dot === 0 ? "bg-green-500" : "bg-gray-300"}`}
+                className={`h-2 w-2 rounded-full UGX{dot === 0 ? "bg-blue-500" : "bg-gray-300"}`}
                 aria-label={`Go to page UGX{dot + 1}`}
               />
             ))}
