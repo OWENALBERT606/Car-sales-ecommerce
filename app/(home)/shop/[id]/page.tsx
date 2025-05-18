@@ -1,15 +1,11 @@
 
 import { getAllProducts, getProductById } from '@/actions/products';
 import ProductDetail from '@/components/frontend/shoppage/product-details';
-import { authOptions } from '@/config/auth';
-import { getServerSession } from 'next-auth';
-
-
 
 export default async function Page({params}: {params: Promise<{ id: string }>}):Promise<any> {
-  
 
   const {id}=await params;
+
   try {
     const product= await getProductById(id);
     if (!product) {
@@ -28,7 +24,7 @@ export default async function Page({params}: {params: Promise<{ id: string }>}):
     
     return (
       <div className="p-4 text-center text-red-600">
-        Error loading question. Please try again later.
+        Error loading product. Please try again later.
       </div>
     );
   }

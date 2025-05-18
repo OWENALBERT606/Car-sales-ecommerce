@@ -9,6 +9,7 @@ import { getServerSession } from 'next-auth';
 
 
 export default async function Page({params}: {params: Promise<{ id: string }>}):Promise<any> {
+  
 
   const {id}=await params;
   try {

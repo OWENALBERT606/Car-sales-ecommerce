@@ -4,6 +4,7 @@ import "./globals.css";
 import { Toaster } from "react-hot-toast";
 import Providers from "@/components/Providers";
 import ReactQueryProvider from "./providers/ReactQueryProvider";
+import CartProviders from "@/redux/CartProviders";
 // import FooterBanner from "@/components/Footer";
 const inter = Rethink_Sans({ subsets: ["latin"], display: "swap" });
 
@@ -17,7 +18,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <CartProviders>
+      <html lang="en" suppressHydrationWarning>
       <body className={inter.className}>
       <ReactQueryProvider>
         <Providers>{children}</Providers>
@@ -25,5 +27,6 @@ export default function RootLayout({
         
       </body>
     </html>
+    </CartProviders>
   );
 }

@@ -41,7 +41,7 @@ export default function TopNavigationBar() {
         </div>
 
         {/* Contact and dropdowns */}
-        <div className="flex items-center space-x-2 text-xs md:text-sm">
+        <div className="flex  items-center space-x-2 text-xs md:text-sm">
           <span className="hidden md:inline">Need help?</span>
           <a
             href="tel:+256701234567"
@@ -56,37 +56,6 @@ export default function TopNavigationBar() {
           >
             support@localfarmconnect.com
           </a>
-
-          {/* Language and currency selectors */}
-          <div className="ml-4 flex items-center space-x-2">
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button variant="ghost" size="sm" className="flex items-center px-2 py-1">
-                  <span>English</span>
-                  <ChevronDown className="h-3 w-3" />
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end">
-                <DropdownMenuItem>English</DropdownMenuItem>
-                <DropdownMenuItem>Swahili</DropdownMenuItem>
-                <DropdownMenuItem>Luganda</DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
-
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button variant="ghost" size="sm" className="flex items-center px-2 py-1">
-                  <span>UGX</span>
-                  <ChevronDown className="h-3 w-3" />
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end">
-                <DropdownMenuItem>UGX</DropdownMenuItem>
-                <DropdownMenuItem>KES</DropdownMenuItem>
-                <DropdownMenuItem>USD</DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
-          </div>
         </div>
       </div>
     </div>

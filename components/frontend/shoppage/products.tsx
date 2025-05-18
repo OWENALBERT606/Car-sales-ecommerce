@@ -15,6 +15,9 @@ import {
 import { Badge } from "@/components/ui/badge"
 import Image from "next/image"
 import Link from "next/link"
+import { useRouter } from "next/navigation"
+import { useSession } from "next-auth/react"
+import toast from "react-hot-toast"
 
 export default function Products({ products,categories}: { products: any[] ,categories:any[]}) {
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid")
@@ -25,6 +28,22 @@ export default function Products({ products,categories}: { products: any[] ,cate
   const [hasMore, setHasMore] = useState(true)
   const [priceRange, setPriceRange] = useState([0, 100000]);
   const loaderRef = useRef<HTMLDivElement | null>(null)
+  const { data: session } = useSession()
+  const router = useRouter()
+
+  
+  const [cart, setCart] = useState<any[]>(() => {
+    if (typeof window !== "undefined") {
+      const storedCart = localStorage.getItem("cart")
+      return storedCart ? JSON.parse(storedCart) : []
+    }
+    return []
+  })
+
+  useEffect(() => {
+    localStorage.setItem("cart", JSON.stringify(cart))
+  }, [cart])
+
   
 
   // Sorting logic
@@ -103,6 +122,22 @@ export default function Products({ products,categories}: { products: any[] ,cate
     }
   }, [loaderRef.current, loading, hasMore])
 
+   const handleAddToCart = (product: any) => {
+    if (!session) {
+      toast.error("You must be signed in to add items to your cart!")
+      router.push("/login")
+      return
+    }
+    setCart(prevCart => {
+      const exists = prevCart.find(item => item.id === product.id)
+      if (exists) {
+        toast.error(`${product.title} is already in your cart!`)
+        return prevCart
+      }
+      // toast.success(`${product.title} has been added to your cart!`)
+      return [...prevCart, product]
+    })
+  }
   return (
     <div className="container mx-auto px-4 py-8">
       <h1 className="mb-6 text-2xl font-bold text-red-600">
@@ -547,7 +582,7 @@ export default function Products({ products,categories}: { products: any[] ,cate
                 
                       {/* Actions */}
                       <div className="mt-auto flex items-center w-full justify-between">
-                        <Button size="sm" variant="outline" className="h-6 w-full rounded-full bg-red-600 text-white hover:bg-red-700 text-xs px-1">
+                        <Button onClick={() => handleAddToCart(product)} size="sm" variant="outline" className="h-6 w-full rounded-full bg-red-600 text-white hover:bg-red-700 text-xs px-1">
                           <ShoppingCart className="mr-1 h-3 w-3" />
                           Add
                         </Button>
