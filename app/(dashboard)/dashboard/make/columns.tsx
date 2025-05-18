@@ -61,7 +61,7 @@ export const columns: ColumnDef<Category>[] = [
         <ActionColumn
           row={row}
           model="make"
-          editEndpoint={`/make/update/${make.id}`}
+          editEndpoint={`/dashboard/make/update/${make.id}`}
           id={make.id}
         />
       );

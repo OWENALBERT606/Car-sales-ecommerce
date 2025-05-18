@@ -1,6 +1,7 @@
 import type React from "react"
 import Link from "next/link"
 import { ChevronRight } from "lucide-react"
+import Image from "next/image"
 
 interface CategoryItem {
   icon: React.ReactNode
@@ -23,9 +24,17 @@ export default function AgriCategorySidebar({makes}:{makes:any}) {
         {makes.map((item:any, index:any) => (
           <Link
             key={item.id}
-            href={`/farms/${item.id}`}
+            href={`/shop/${item.id}`}
             className="flex items-center justify-between px-4 py-3 hover:bg-gray-50"
           >
+             <Image
+        src={item.imageUrl} // Replace with your actual image path
+        alt={item.name}
+        width={40}
+        height={6}
+        className="rounded-xl object-cover"
+        priority
+      />
             {item.name} <span className="text-blue-600">{item.products.length}</span>
           </Link>
         ))}

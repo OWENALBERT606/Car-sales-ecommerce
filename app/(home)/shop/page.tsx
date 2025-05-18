@@ -1,5 +1,5 @@
 "use client"
-import AgricultureBanner from '@/components/frontend/shoppage/agriculture-banner'
+import ShopBanner from '@/components/frontend/shoppage/agriculture-banner';
 import Products from '@/components/frontend/shoppage/products'
 import { useBanners } from '@/hooks/useBanners';
 import { useCategories } from '@/hooks/useCategories';
@@ -12,7 +12,7 @@ export default function page() {
   const {categories}=useCategories();
   return (
     <div className='container mx-auto px-4 py-8 md:px-12 lg:px-24 md:p-6'>
-        <AgricultureBanner banners={banners}/>
+        <ShopBanner banners={banners}/>
         <Products products={products} categories={categories}/>
     </div>
   )

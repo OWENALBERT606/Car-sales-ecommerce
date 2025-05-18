@@ -59,11 +59,6 @@ export default function page() {
           <ProductGridWithSidebar products={products} />
         </div>
       <UserReviews />
-        <div className="container mx-auto px-4 py-12">
-        <div className="my-12">
-          <LatestNews />
-        </div>
-      </div>
         <NewsletterSubscription/>
       </div>
      

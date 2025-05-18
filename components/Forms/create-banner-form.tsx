@@ -75,6 +75,7 @@ export default function CreateBannerForm({
     try {
       setLoading(true);
       data.categoryId=selectedCategory.value;
+      data.imageUrl=imageUrl
 
 
       console.log(data);

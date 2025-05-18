@@ -3,399 +3,286 @@
 import type React from "react"
 
 import { useState } from "react"
-import Image from "next/image"
-import Link from "next/link"
+import { useRouter } from "next/navigation"
+import { CalendarIcon, CreditCard, MapPin, Package, Truck } from "lucide-react"
+
 import { Button } from "@/components/ui/button"
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
-import { Textarea } from "@/components/ui/textarea"
-import { Checkbox } from "@/components/ui/checkbox"
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import { Label } from "@/components/ui/label"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
+import { Separator } from "@/components/ui/separator"
+import { Textarea } from "@/components/ui/textarea"
+import { Calendar } from "@/components/ui/calendar"
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
+import { format } from "date-fns"
+import { cn } from "@/lib/utils"
 
-export default function CheckoutPage() {
-  // State for shipping option
-  const [shippingOption, setShippingOption] = useState("free")
+// Mock data for order items - in a real app, this would come from your cart state
+const orderItems = [
+  {
+    id: "1",
+    name: "Vintage T-Shirt",
+    price: 29.99,
+    quantity: 2,
+  },
+  {
+    id: "2",
+    name: "Designer Jeans",
+    price: 89.99,
+    quantity: 1,
+  },
+]
 
-  // State for payment method
-  const [paymentMethod, setPaymentMethod] = useState("bank-transfer")
+// Calculate order total
+const subtotal = orderItems.reduce((sum, item) => sum + item.price * item.quantity, 0)
+const shipping = 5.99
+const total = subtotal + shipping
 
-  // State for different shipping address
-  const [differentShippingAddress, setDifferentShippingAddress] = useState(false)
+export default function CheckoutForm() {
+  const router = useRouter()
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [paymentMethod, setPaymentMethod] = useState("CASH")
+  const [deliveryMethod, setDeliveryMethod] = useState("standard")
+  const [scheduledDate, setScheduledDate] = useState<Date | undefined>(undefined)
 
-  // State for terms agreement
-  const [termsAgreed, setTermsAgreed] = useState(false)
+  async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault()
+    setIsSubmitting(true)
 
-  // Sample cart items
-  const cartItems = [
-    {
-      id: 1,
-      name: "Organic Raw Wildflower Honey",
-      price: 24.99,
-      quantity: 1,
-      image: "/placeholder.svg?height=50&width=50&text=Honey",
-    },
-    {
-      id: 2,
-      name: "Fresh Organic Vegetables Bundle",
-      price: 35.5,
-      quantity: 1,
-      image: "/placeholder.svg?height=50&width=50&text=Vegetables",
-    },
-    {
-      id: 3,
-      name: "Heirloom Tomato Seeds Pack",
-      price: 12.75,
-      quantity: 1,
-      image: "/placeholder.svg?height=50&width=50&text=Seeds",
-    },
-    {
-      id: 4,
-      name: "Organic Fertilizer - 5lb Bag",
-      price: 19.95,
-      quantity: 1,
-      image: "/placeholder.svg?height=50&width=50&text=Fertilizer",
-    },
-    {
-      id: 5,
-      name: "Handcrafted Wooden Planter Box",
-      price: 45.0,
-      quantity: 1,
-      image: "/placeholder.svg?height=50&width=50&text=Planter",
-    },
-  ]
+    const formData = new FormData(event.currentTarget)
 
-  // Calculate subtotal
-  const subtotal = cartItems.reduce((total, item) => total + item.price * item.quantity, 0)
+    // In a real app, you would submit this data to your API
+    const orderData = {
+      shippingAddress: formData.get("address"),
+      shippingPhone: formData.get("phone"),
+      deliveryMethod: deliveryMethod,
+      paymentMethod: paymentMethod,
+      scheduledAt: scheduledDate,
+      total: total,
+      items: orderItems.map((item) => ({
+        productId: item.id,
+        quantity: item.quantity,
+        price: item.price,
+      })),
+    }
 
-  // Calculate total
-  const total = subtotal
+    console.log("Order data:", orderData)
 
-  // Handle form submission
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    // In a real application, you would handle payment processing here
-    console.log("Order submitted")
+    // Simulate API call
+    await new Promise((resolve) => setTimeout(resolve, 1500))
+
+    // Redirect to confirmation page
+    router.push("/checkout/confirmation")
   }
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      <div className="mb-4 rounded-lg bg-green-50 p-4 text-green-800">
-        <p>Your order qualifies for free shipping!</p>
-        <div className="mt-2 h-2 w-full overflow-hidden rounded-full bg-green-200">
-          <div className="h-full w-full bg-green-600"></div>
-        </div>
-      </div>
-
-      <form onSubmit={handleSubmit}>
-        <div className="grid gap-8 md:grid-cols-[1fr_400px]">
-          {/* Billing Details */}
-          <div>
-            <h2 className="mb-6 text-xl font-bold text-gray-900">BILLING DETAILS</h2>
-
-            <div className="grid gap-6">
-              <div className="grid gap-6 sm:grid-cols-2">
-                <div className="space-y-2">
-                  <Label htmlFor="first-name" className="font-medium">
-                    First name <span className="text-red-500">*</span>
-                  </Label>
-                  <Input id="first-name" required />
-                </div>
-
-                <div className="space-y-2">
-                  <Label htmlFor="last-name" className="font-medium">
-                    Last name <span className="text-red-500">*</span>
-                  </Label>
-                  <Input id="last-name" required />
-                </div>
-              </div>
-
+    <form onSubmit={handleSubmit}>
+      <div className="grid gap-8 md:grid-cols-2 py-6">
+        <div className="space-y-6">
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <MapPin className="h-5 w-5" />
+                Shipping Information
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4">
               <div className="space-y-2">
-                <Label htmlFor="company-name" className="font-medium">
-                  Farm/Company name (optional)
-                </Label>
-                <Input id="company-name" />
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="country" className="font-medium">
-                  Country / Region <span className="text-red-500">*</span>
-                </Label>
-                <Select defaultValue="us">
-                  <SelectTrigger id="country">
-                    <SelectValue placeholder="Select country" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="us">United States (US)</SelectItem>
-                    <SelectItem value="ca">Canada</SelectItem>
-                    <SelectItem value="mx">Mexico</SelectItem>
-                    <SelectItem value="uk">United Kingdom</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="street-address" className="font-medium">
-                  Street address <span className="text-red-500">*</span>
-                </Label>
-                <Input id="street-address" placeholder="House number and street name" required />
-                <Input id="street-address-2" placeholder="Apartment, suite, unit, etc. (optional)" />
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="city" className="font-medium">
-                  Town / City <span className="text-red-500">*</span>
-                </Label>
-                <Input id="city" required />
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="state" className="font-medium">
-                  State <span className="text-red-500">*</span>
-                </Label>
-                <Select defaultValue="ca">
-                  <SelectTrigger id="state">
-                    <SelectValue placeholder="Select state" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="ca">California</SelectItem>
-                    <SelectItem value="ny">New York</SelectItem>
-                    <SelectItem value="tx">Texas</SelectItem>
-                    <SelectItem value="fl">Florida</SelectItem>
-                    <SelectItem value="il">Illinois</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="zip" className="font-medium">
-                  ZIP Code <span className="text-red-500">*</span>
-                </Label>
-                <Input id="zip" required />
-              </div>
-
-              <div className="grid gap-6 sm:grid-cols-2">
-                <div className="space-y-2">
-                  <Label htmlFor="phone" className="font-medium">
-                    Phone <span className="text-red-500">*</span>
-                  </Label>
-                  <Input id="phone" type="tel" required />
-                </div>
-
-                <div className="space-y-2">
-                  <Label htmlFor="email" className="font-medium">
-                    Email address <span className="text-red-500">*</span>
-                  </Label>
-                  <Input id="email" type="email" required />
-                </div>
-              </div>
-
-              <div className="flex items-center space-x-2">
-                <Checkbox id="create-account" />
-                <Label htmlFor="create-account" className="text-sm font-normal">
-                  Create an account?
-                </Label>
-              </div>
-
-              <div className="flex items-center space-x-2">
-                <Checkbox
-                  id="different-address"
-                  checked={differentShippingAddress}
-                  onCheckedChange={(checked) => setDifferentShippingAddress(checked as boolean)}
-                />
-                <Label htmlFor="different-address" className="text-sm font-normal">
-                  SHIP TO A DIFFERENT ADDRESS?
-                </Label>
-              </div>
-
-              {differentShippingAddress && (
-                <div className="rounded-lg border border-gray-200 p-4">
-                  <h3 className="mb-4 font-medium">Shipping Address</h3>
-                  {/* Shipping address fields would go here */}
-                  <div className="grid gap-4">
-                    <div className="grid gap-4 sm:grid-cols-2">
-                      <Input placeholder="First name *" />
-                      <Input placeholder="Last name *" />
-                    </div>
-                    <Input placeholder="Street address *" />
-                    <Input placeholder="Town / City *" />
-                    <div className="grid gap-4 sm:grid-cols-2">
-                      <Select defaultValue="ca">
-                        <SelectTrigger>
-                          <SelectValue placeholder="State *" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="ca">California</SelectItem>
-                          <SelectItem value="ny">New York</SelectItem>
-                          <SelectItem value="tx">Texas</SelectItem>
-                        </SelectContent>
-                      </Select>
-                      <Input placeholder="ZIP Code *" />
-                    </div>
-                  </div>
-                </div>
-              )}
-
-              <div className="space-y-2">
-                <Label htmlFor="order-notes" className="font-medium">
-                  Order notes (optional)
-                </Label>
+                <Label htmlFor="address">Address</Label>
                 <Textarea
-                  id="order-notes"
-                  placeholder="Notes about your order, e.g. special notes for delivery or harvest preferences."
+                  id="address"
+                  name="address"
+                  placeholder="Enter your full address"
+                  required
                   className="min-h-[100px]"
                 />
               </div>
-            </div>
-          </div>
-
-          {/* Order Summary */}
-          <div>
-            <div className="rounded-lg border border-gray-200 p-6">
-              <h2 className="mb-6 text-xl font-bold text-gray-900">YOUR ORDER</h2>
-
-              <div className="mb-4 flex justify-between border-b pb-2 text-sm font-medium">
-                <span>Product</span>
-                <span>Subtotal</span>
+              <div className="space-y-2">
+                <Label htmlFor="phone">Phone Number</Label>
+                <Input id="phone" name="phone" type="tel" placeholder="Enter your phone number" required />
               </div>
+            </CardContent>
+          </Card>
 
-              <div className="space-y-3">
-                {cartItems.map((item) => (
-                  <div key={item.id} className="flex items-center justify-between border-b pb-3 text-sm">
-                    <div className="flex items-center gap-2">
-                      <div className="h-10 w-10 overflow-hidden rounded border">
-                        <Image
-                          src={item.image || "/placeholder.svg"}
-                          alt={item.name}
-                          width={40}
-                          height={40}
-                          className="h-full w-full object-cover"
-                        />
-                      </div>
-                      <span>
-                        {item.name} <span className="text-gray-500">× {item.quantity}</span>
-                      </span>
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <Truck className="h-5 w-5" />
+                Delivery Method
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <RadioGroup
+                value={deliveryMethod}
+                onValueChange={setDeliveryMethod}
+                className="space-y-3"
+                data-selected-color="red"
+              >
+                <div
+                  className={`flex items-center space-x-2 rounded-md border p-4 ${deliveryMethod === "standard" ? "border-red-500" : ""}`}
+                >
+                  <RadioGroupItem value="standard" id="standard" />
+                  <Label htmlFor="standard" className="flex flex-1 items-center justify-between">
+                    <div>
+                      <p className="font-medium">Standard Delivery</p>
+                      <p className="text-sm text-muted-foreground">Delivery in 3-5 business days</p>
                     </div>
-                    <span className="font-medium">${(item.price * item.quantity).toFixed(2)}</span>
-                  </div>
-                ))}
-              </div>
-
-              <div className="my-4 flex justify-between border-b pb-4 pt-2">
-                <span className="font-medium">Subtotal</span>
-                <span className="font-medium">${subtotal.toFixed(2)}</span>
-              </div>
-
-              <div className="mb-4">
-                <h3 className="mb-2 font-medium">Shipping</h3>
-                <RadioGroup value={shippingOption} onValueChange={setShippingOption} className="space-y-2">
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center space-x-2">
-                      <RadioGroupItem value="free" id="free-shipping" />
-                      <Label htmlFor="free-shipping" className="font-normal">
-                        Free shipping
-                      </Label>
-                    </div>
-                    <span className="text-sm">$0.00</span>
-                  </div>
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center space-x-2">
-                      <RadioGroupItem value="local" id="local-pickup" />
-                      <Label htmlFor="local-pickup" className="font-normal">
-                        Local pickup
-                      </Label>
-                    </div>
-                    <span className="text-sm">$0.00</span>
-                  </div>
-                </RadioGroup>
-              </div>
-
-              <div className="mb-6 flex justify-between border-b pb-4 text-lg font-bold">
-                <span>Total</span>
-                <span className="text-green-700">${total.toFixed(2)}</span>
-              </div>
-
-              <div className="space-y-4">
-                <RadioGroup value={paymentMethod} onValueChange={setPaymentMethod} className="space-y-4">
-                  <div className="space-y-2">
-                    <div className="flex items-center space-x-2">
-                      <RadioGroupItem value="bank-transfer" id="bank-transfer" />
-                      <Label htmlFor="bank-transfer" className="font-medium">
-                        Direct bank transfer
-                      </Label>
-                    </div>
-                    {paymentMethod === "bank-transfer" && (
-                      <p className="rounded-md bg-gray-50 p-3 text-sm text-gray-600">
-                        Make your payment directly into our bank account. Please use your Order ID as the payment
-                        reference. Your order will not be shipped until the funds have cleared in our account.
-                      </p>
-                    )}
-                  </div>
-
-                  <div className="space-y-2">
-                    <div className="flex items-center space-x-2">
-                      <RadioGroupItem value="check" id="check" />
-                      <Label htmlFor="check" className="font-medium">
-                        Check payments
-                      </Label>
-                    </div>
-                    {paymentMethod === "check" && (
-                      <p className="rounded-md bg-gray-50 p-3 text-sm text-gray-600">
-                        Please send a check to: Farm Fresh Market, 123 Harvest Lane, Farmington, CA 90210
-                      </p>
-                    )}
-                  </div>
-
-                  <div className="space-y-2">
-                    <div className="flex items-center space-x-2">
-                      <RadioGroupItem value="cash" id="cash" />
-                      <Label htmlFor="cash" className="font-medium">
-                        Cash on delivery
-                      </Label>
-                    </div>
-                    {paymentMethod === "cash" && (
-                      <p className="rounded-md bg-gray-50 p-3 text-sm text-gray-600">
-                        Pay with cash upon delivery. Available for local deliveries only.
-                      </p>
-                    )}
-                  </div>
-                </RadioGroup>
-
-                <div className="rounded-md bg-gray-50 p-3 text-sm text-gray-600">
-                  <p>
-                    Your personal data will be used to process your order, support your experience throughout this
-                    website, and for other purposes described in our{" "}
-                    <Link href="/privacy-policy" className="text-green-600 hover:underline">
-                      privacy policy
-                    </Link>
-                    .
-                  </p>
-                </div>
-
-                <div className="flex items-start space-x-2">
-                  <Checkbox
-                    id="terms"
-                    checked={termsAgreed}
-                    onCheckedChange={(checked) => setTermsAgreed(checked as boolean)}
-                    required
-                  />
-                  <Label htmlFor="terms" className="text-sm font-normal">
-                    I have read and agree to the website{" "}
-                    <Link href="/terms" className="text-green-600 hover:underline">
-                      terms and conditions
-                    </Link>
-                    <span className="text-red-500"> *</span>
+                    <div className="font-medium">$5.99</div>
                   </Label>
                 </div>
+                <div
+                  className={`flex items-center space-x-2 rounded-md border p-4 ${deliveryMethod === "express" ? "border-red-500" : ""}`}
+                >
+                  <RadioGroupItem value="express" id="express" />
+                  <Label htmlFor="express" className="flex flex-1 items-center justify-between">
+                    <div>
+                      <p className="font-medium">Express Delivery</p>
+                      <p className="text-sm text-muted-foreground">Delivery in 1-2 business days</p>
+                    </div>
+                    <div className="font-medium">$12.99</div>
+                  </Label>
+                </div>
+                <div
+                  className={`flex items-center space-x-2 rounded-md border p-4 ${deliveryMethod === "scheduled" ? "border-red-500" : ""}`}
+                >
+                  <RadioGroupItem value="scheduled" id="scheduled" />
+                  <Label htmlFor="scheduled" className="flex flex-1 items-center justify-between">
+                    <div>
+                      <p className="font-medium">Scheduled Delivery</p>
+                      <p className="text-sm text-muted-foreground">Choose your delivery date</p>
 
-                <Button type="submit" className="w-full bg-green-600 hover:bg-green-700" disabled={!termsAgreed}>
-                  Place order
-                </Button>
-              </div>
-            </div>
-          </div>
+                      {deliveryMethod === "scheduled" && (
+                        <div className="mt-3">
+                          <Popover>
+                            <PopoverTrigger asChild>
+                              <Button
+                                variant="outline"
+                                className={cn(
+                                  "w-full justify-start text-left font-normal border-red-200 focus:ring-red-500",
+                                  !scheduledDate && "text-muted-foreground",
+                                )}
+                              >
+                                <CalendarIcon className="mr-2 h-4 w-4" />
+                                {scheduledDate ? format(scheduledDate, "PPP") : "Select a date"}
+                              </Button>
+                            </PopoverTrigger>
+                            <PopoverContent className="w-auto p-0">
+                              <Calendar
+                                mode="single"
+                                selected={scheduledDate}
+                                onSelect={setScheduledDate}
+                                initialFocus
+                                disabled={(date) => {
+                                  // Disable dates in the past and today
+                                  const today = new Date()
+                                  today.setHours(0, 0, 0, 0)
+                                  return date < new Date(today.setDate(today.getDate() + 1))
+                                }}
+                              />
+                            </PopoverContent>
+                          </Popover>
+                        </div>
+                      )}
+                    </div>
+                    <div className="font-medium">$9.99</div>
+                  </Label>
+                </div>
+              </RadioGroup>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <CreditCard className="h-5 w-5" />
+                Payment Method
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <RadioGroup
+                value={paymentMethod}
+                onValueChange={setPaymentMethod}
+                className="space-y-3"
+                data-selected-color="red"
+              >
+                <div
+                  className={`flex items-center space-x-2 rounded-md border p-4 ${paymentMethod === "CASH" ? "border-red-500" : ""}`}
+                >
+                  <RadioGroupItem value="CASH" id="cash" />
+                  <Label htmlFor="cash" className="font-medium">
+                    Cash on Delivery
+                  </Label>
+                </div>
+                <div
+                  className={`flex items-center space-x-2 rounded-md border p-4 ${paymentMethod === "CREDIT_CARD" ? "border-red-500" : ""}`}
+                >
+                  <RadioGroupItem value="CREDIT_CARD" id="credit-card" />
+                  <Label htmlFor="credit-card" className="font-medium">
+                    Credit Card
+                  </Label>
+                </div>
+                <div
+                  className={`flex items-center space-x-2 rounded-md border p-4 ${paymentMethod === "PAYPAL" ? "border-red-500" : ""}`}
+                >
+                  <RadioGroupItem value="PAYPAL" id="paypal" />
+                  <Label htmlFor="paypal" className="font-medium">
+                    PayPal
+                  </Label>
+                </div>
+              </RadioGroup>
+            </CardContent>
+          </Card>
         </div>
-      </form>
-    </div>
+
+        <div>
+          <Card className="sticky top-6">
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <Package className="h-5 w-5" />
+                Order Summary
+              </CardTitle>
+              <CardDescription>
+                {orderItems.length} {orderItems.length === 1 ? "item" : "items"} in your order
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              {orderItems.map((item) => (
+                <div key={item.id} className="flex justify-between">
+                  <div>
+                    <p className="font-medium">{item.name}</p>
+                    <p className="text-sm text-muted-foreground">Qty: {item.quantity}</p>
+                  </div>
+                  <p className="font-medium">${(item.price * item.quantity).toFixed(2)}</p>
+                </div>
+              ))}
+
+              <Separator />
+
+              <div className="space-y-2">
+                <div className="flex justify-between">
+                  <p className="text-muted-foreground">Subtotal</p>
+                  <p>${subtotal.toFixed(2)}</p>
+                </div>
+                <div className="flex justify-between">
+                  <p className="text-muted-foreground">Shipping</p>
+                  <p>${shipping.toFixed(2)}</p>
+                </div>
+                <Separator />
+                <div className="flex justify-between font-medium">
+                  <p>Total</p>
+                  <p>${total.toFixed(2)}</p>
+                </div>
+              </div>
+            </CardContent>
+            <CardFooter>
+              <Button type="submit" className="w-full bg-red-600 hover:bg-red-700" size="lg" disabled={isSubmitting}>
+                {isSubmitting ? "Processing..." : "Place Order"}
+              </Button>
+            </CardFooter>
+          </Card>
+        </div>
+      </div>
+    </form>
   )
 }

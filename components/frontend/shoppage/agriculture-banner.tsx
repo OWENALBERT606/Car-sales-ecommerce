@@ -2,13 +2,13 @@ import { ArrowRight } from "lucide-react"
 import Link from "next/link"
 import Image from "next/image"
 
-export default function AgricultureBanner({banners}:{banners:any}) {
+export default function ShopBanner({banners}:{banners:any}) {
   return (
     <>
     {
       banners.slice(2,3).map((item:any)=>{
         return(
-          <div className="relative overflow-hidden rounded-lg bg-red-600 text-white">
+          <div key={item.id} className="relative overflow-hidden rounded-lg bg-red-600 text-white">
       {/* Background Image Layer */}
       <div className="absolute inset-0 z-0">
         <Image
