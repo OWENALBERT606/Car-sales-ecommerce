@@ -28,7 +28,7 @@ export default function TopNavigationBar() {
             Wishlist
           </Link>
           <Link href="/sell" className="text-red-700 font-medium hover:text-red-900">
-            Sell Produce
+            Sell with us
           </Link>
         </div>
 
@@ -51,10 +51,10 @@ export default function TopNavigationBar() {
           </a>
           <span className="hidden md:inline">or</span>
           <a
-            href="mailto:support@localfarmconnect.com"
+            href="mailto:support@nagotamotors.com"
             className="font-medium text-gray-700 hover:text-gray-900"
           >
-            support@localfarmconnect.com
+            support@nagotamotors.com
           </a>
         </div>
       </div>

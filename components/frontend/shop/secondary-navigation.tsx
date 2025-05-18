@@ -10,7 +10,7 @@ export default function SecNavigation() {
         <div className="flex items-center space-x-1">
           <NavItem href="/" label="Home" />
           <NavItem href="/shop" label="Shop"/>
-          <NavItem href="/seller-onboarding" label="Sell" />
+          <NavItem href="/seller-onboarding" label="Sell with us" />
           <NavItem href="/blog" label="Blog" />
         </div>
         <div>
