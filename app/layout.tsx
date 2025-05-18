@@ -9,8 +9,8 @@ import CartProviders from "@/redux/CartProviders";
 const inter = Rethink_Sans({ subsets: ["latin"], display: "swap" });
 
 export const metadata: Metadata = {
-  title: "Farm Connect",
-  description: "Join FarmConnect",
+  title: "Nagota Motors",
+  description: "Join Nagota Motors",
 };
 export default function RootLayout({
   children,
