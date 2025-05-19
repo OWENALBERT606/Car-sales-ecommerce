@@ -18,10 +18,10 @@ export default function TopNavigationBar() {
           <Link href="/about" className="text-gray-700 hover:text-gray-900">
             About Us
           </Link>
-          <Link href="/dashboard" className="text-gray-700 hover:text-gray-900">
+          <Link href="/profile" className="text-gray-700 hover:text-gray-900">
             My Dashboard
           </Link>
-          <Link href="/orders" className="text-gray-700 hover:text-gray-900">
+          <Link href="/profile" className="text-gray-700 hover:text-gray-900">
             My Orders
           </Link>
           <Link href="/wishlist" className="text-gray-700 hover:text-gray-900">

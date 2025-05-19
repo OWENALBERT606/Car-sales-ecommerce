@@ -2,7 +2,7 @@
 
 import type React from "react"
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
 import { CalendarIcon, CreditCard, MapPin, Package, Truck } from "lucide-react"
 
@@ -17,34 +17,63 @@ import { Calendar } from "@/components/ui/calendar"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
 import { format } from "date-fns"
 import { cn } from "@/lib/utils"
+import { useDispatch, useSelector } from "react-redux"
+import { AppDispatch } from "@/redux/store"
+import { addItem } from "@/redux/slices/cartSlice"
+import { createOrder } from "@/actions/orders"
+import { OrderStatus } from "@/types/types"
+import { createBulkOrderItems } from "@/actions/orderItem"
+import toast from "react-hot-toast"
 
 // Mock data for order items - in a real app, this would come from your cart state
-const orderItems = [
-  {
-    id: "1",
-    name: "Vintage T-Shirt",
-    price: 29.99,
-    quantity: 2,
-  },
-  {
-    id: "2",
-    name: "Designer Jeans",
-    price: 89.99,
-    quantity: 1,
-  },
-]
 
-// Calculate order total
-const subtotal = orderItems.reduce((sum, item) => sum + item.price * item.quantity, 0)
-const shipping = 5.99
-const total = subtotal + shipping
 
-export default function CheckoutForm() {
+export default function CheckoutForm({session}:{session:any}) {
+   const dispatch: AppDispatch = useDispatch();
+   console.log(session);
   const router = useRouter()
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [paymentMethod, setPaymentMethod] = useState("CASH")
   const [deliveryMethod, setDeliveryMethod] = useState("standard")
-  const [scheduledDate, setScheduledDate] = useState<Date | undefined>(undefined)
+  const [scheduledDate, setScheduledDate] = useState<Date | undefined>(undefined);
+    const cartItems = useSelector((state: any) => state.cart.items);
+
+  
+    // Fetch items from local storage when the component mounts
+    useEffect(() => {
+      const storedItems = localStorage.getItem("cart");
+      if (storedItems) {
+        try {
+          const parsedItems = JSON.parse(storedItems);
+          if (Array.isArray(parsedItems)) {
+            const items = parsedItems.map((item: any) => ({
+              ...item,
+              qty: item.qty ?? 1 // Ensure qty defaults to 1
+            }));
+            // Dispatch addItem for each item to sync local storage with Redux
+            items.forEach((item: any) => {
+              dispatch(addItem(item));
+            });
+          }
+        } catch (error) {
+          console.error("Error parsing cart items from localStorage:", error);
+        }
+      }
+    }, [dispatch]);
+  
+    // Update local storage whenever cart items change
+    useEffect(() => {
+      localStorage.setItem("cart", JSON.stringify(cartItems));
+    }, [cartItems]);
+  
+  
+const orderItems=cartItems;
+    
+      // Calculate subtotal
+    const subtotal = cartItems.reduce((total: number, item: any) => {
+      return total + (item.salePrice || item.price) * item.qty;
+    }, 0);
+  
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault()
@@ -52,29 +81,49 @@ export default function CheckoutForm() {
 
     const formData = new FormData(event.currentTarget)
 
-    // In a real app, you would submit this data to your API
+  
+     // In a real app, you would submit this data to your API
     const orderData = {
-      shippingAddress: formData.get("address"),
-      shippingPhone: formData.get("phone"),
-      deliveryMethod: deliveryMethod,
-      paymentMethod: paymentMethod,
-      scheduledAt: scheduledDate,
-      total: total,
-      items: orderItems.map((item) => ({
-        productId: item.id,
-        quantity: item.quantity,
-        price: item.price,
-      })),
+  userId: session?.user?.id,
+  shippingAddress: (formData.get("address") as string) || "",
+  shippingPhone: (formData.get("phone") as string) || "",
+  deliveryMethod: deliveryMethod,
+  paymentMethod: paymentMethod,
+  scheduledAt: scheduledDate ?? null,
+  total: subtotal,
+  status:  OrderStatus.PENDING
     }
 
-    console.log("Order data:", orderData)
+    try {
+       const response = await createOrder(orderData);
+         if (response.success) {
+          const orderItemsPayload = orderItems.map((item:any) => {
+          const quantity = item.qty || 1;
+          const price = item.salePrice || item.price || 0;
+          return {
+            orderId: response?.data?.id,
+            productId: item.id,
+            quantity: quantity,
+            unitPrice: price,
+            total: price * quantity, 
+          };
+        });
+      
+    };
 
-    // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 1500))
+  
+      // Assuming you have a function to create order items
+      // await createBulkOrderItems(orderItemsPayload);
+       setIsSubmitting(false)
+       // Redirect to confirmation page
+    toast.success("order placed successfully")
+    // router.push("/checkout/confirmation")
+    }catch{
 
-    // Redirect to confirmation page
-    router.push("/checkout/confirmation")
-  }
+    }
+      
+    }
+
 
   return (
     <form onSubmit={handleSubmit}>
@@ -222,14 +271,6 @@ export default function CheckoutForm() {
                     Credit Card
                   </Label>
                 </div>
-                <div
-                  className={`flex items-center space-x-2 rounded-md border p-4 ${paymentMethod === "PAYPAL" ? "border-red-500" : ""}`}
-                >
-                  <RadioGroupItem value="PAYPAL" id="paypal" />
-                  <Label htmlFor="paypal" className="font-medium">
-                    PayPal
-                  </Label>
-                </div>
               </RadioGroup>
             </CardContent>
           </Card>
@@ -247,13 +288,13 @@ export default function CheckoutForm() {
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
-              {orderItems.map((item) => (
+              {orderItems.map((item:any) => (
                 <div key={item.id} className="flex justify-between">
                   <div>
                     <p className="font-medium">{item.name}</p>
-                    <p className="text-sm text-muted-foreground">Qty: {item.quantity}</p>
+                    <p className="text-sm text-muted-foreground">Qty: {item.qty}</p>
                   </div>
-                  <p className="font-medium">${(item.price * item.quantity).toFixed(2)}</p>
+                  <p className="font-medium">UGX-{(item.price * item.qty).toFixed(2)}</p>
                 </div>
               ))}
 
@@ -262,16 +303,15 @@ export default function CheckoutForm() {
               <div className="space-y-2">
                 <div className="flex justify-between">
                   <p className="text-muted-foreground">Subtotal</p>
-                  <p>${subtotal.toFixed(2)}</p>
+                  <p>UGX-{subtotal.toFixed(2)}</p>
                 </div>
                 <div className="flex justify-between">
                   <p className="text-muted-foreground">Shipping</p>
-                  <p>${shipping.toFixed(2)}</p>
                 </div>
                 <Separator />
                 <div className="flex justify-between font-medium">
                   <p>Total</p>
-                  <p>${total.toFixed(2)}</p>
+                  {/* <p>UGX-{total}</p> */}
                 </div>
               </div>
             </CardContent>

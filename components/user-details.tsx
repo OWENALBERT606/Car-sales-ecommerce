@@ -1,0 +1,269 @@
+
+import Image from "next/image"
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { CreditCard, Heart, LogOut, Package, Bell, Share2, MapPin, User, Ticket, Wallet, Search } from "lucide-react"
+import Link from "next/link"
+
+export default function OrdersPage({session}:{session:any}) {
+  // Sample orders data - in a real application, this would come from an API call
+  const orders = [
+    {
+      id: "ORD-7629385",
+      date: "May 15, 2025",
+      total: "UGX 78,500",
+      status: "Delivered",
+      items: [
+        { name: "Wireless Headphones", quantity: 1, price: "UGX 45,000" },
+        { name: "Phone Case", quantity: 1, price: "UGX 15,000" }
+      ],
+      address: "123 Main St, Kampala",
+      tracking: "TRK283947264"
+    },
+    {
+      id: "ORD-6529174",
+      date: "April 28, 2025",
+      total: "UGX 128,000",
+      status: "Processing",
+      items: [
+        { name: "Smart Watch", quantity: 1, price: "UGX 120,000" },
+        { name: "Watch Strap", quantity: 1, price: "UGX 8,000" }
+      ],
+      address: "123 Main St, Kampala",
+      tracking: "TRK738293471"
+    },
+    {
+      id: "ORD-5430962",
+      date: "March 12, 2025",
+      total: "UGX 35,000",
+      status: "Cancelled",
+      items: [
+        { name: "T-Shirt", quantity: 2, price: "UGX 35,000" }
+      ],
+      address: "123 Main St, Kampala",
+      tracking: "N/A"
+    }
+  ]
+
+  // Helper function to get status color
+  const getStatusColor = (status:any) => {
+    switch(status) {
+      case "Delivered":
+        return "text-green-600 bg-green-50";
+      case "Processing":
+        return "text-blue-600 bg-blue-50";
+      case "Shipped":
+        return "text-purple-600 bg-purple-50";
+      case "Cancelled":
+        return "text-red-600 bg-red-50";
+      default:
+        return "text-gray-600 bg-gray-50";
+    }
+  }
+
+  return (
+    <div className="min-h-screen bg-gray-50">
+      <div className="container mx-auto p-4">
+        <div className="flex flex-col md:flex-row gap-6">
+          {/* Sidebar */}
+          <div className="w-full md:w-64 flex-shrink-0">
+            <div className="mb-6">
+              <h2 className="font-bold text-black">Hello NGOBI OWEN ALBERT</h2>
+            </div>
+
+            <div className="space-y-2">
+              <Link href="#" className="flex items-center gap-3 p-3 rounded-md bg-red-700 text-white">
+                <Package size={20} />
+                <span>Orders</span>
+              </Link>
+
+              <Link href="#" className="flex items-center gap-3 p-3 rounded-md hover:bg-gray-100 text-gray-700">
+                <User size={20} />
+                <span>Profile</span>
+              </Link>
+
+              <Link href="#" className="flex items-center gap-3 p-3 rounded-md hover:bg-gray-100 text-gray-700">
+                <MapPin size={20} />
+                <span>Addresses</span>
+              </Link>
+
+              <Link href="#" className="flex items-center gap-3 p-3 rounded-md hover:bg-gray-100 text-gray-700">
+                <Ticket size={20} />
+                <span>Offers</span>
+              </Link>
+
+              <Link href="#" className="flex items-center gap-3 p-3 rounded-md hover:bg-gray-100 text-gray-700">
+                <Heart size={20} />
+                <span>Wishlist</span>
+              </Link>
+
+              <Link href="#" className="flex items-center gap-3 p-3 rounded-md hover:bg-gray-100 text-gray-700">
+                <Bell size={20} />
+                <span>Notifications</span>
+              </Link>
+
+              <Link href="#" className="flex items-center gap-3 p-3 rounded-md hover:bg-gray-100 text-gray-700">
+                <Wallet size={20} />
+                <span>Wallet</span>
+              </Link>
+
+              <Link href="#" className="flex items-center gap-3 p-3 rounded-md hover:bg-gray-100 text-gray-700">
+                <CreditCard size={20} />
+                <span>Loyalty Card</span>
+              </Link>
+
+              <Link href="#" className="flex items-center gap-3 p-3 rounded-md hover:bg-gray-100 text-gray-700">
+                <Share2 size={20} />
+                <span>Share</span>
+              </Link>
+
+              <Link href="#" className="flex items-center gap-3 p-3 rounded-md hover:bg-gray-100 text-gray-700">
+                <LogOut size={20} />
+                <span>Sign Out</span>
+              </Link>
+            </div>
+          </div>
+
+          {/* Main Content */}
+          <div className="flex-1">
+            <div className="mb-6 flex justify-between items-center">
+              <h1 className="text-xl font-bold">My Orders</h1>
+              <div className="relative w-64">
+                <Input 
+                  placeholder="Search orders..." 
+                  className="pl-9" 
+                />
+                <Search className="absolute left-3 top-2.5 h-4 w-4 text-gray-400" />
+              </div>
+            </div>
+
+            {orders.length === 0 ? (
+              <div className="bg-white rounded-md p-12 text-center">
+                <div className="flex justify-center mb-4">
+                  <Package size={48} className="text-gray-300" />
+                </div>
+                <h3 className="text-lg font-medium mb-2">No orders yet</h3>
+                <p className="text-gray-500 mb-6">You haven't placed any orders yet.</p>
+                <Button className="bg-red-700 hover:bg-red-800">
+                  Start Shopping
+                </Button>
+              </div>
+            ) : (
+              <div className="space-y-6">
+                {orders.map((order) => (
+                  <div key={order.id} className="bg-white rounded-md p-6 shadow-sm">
+                    <div className="flex flex-col md:flex-row justify-between mb-4 pb-4 border-b">
+                      <div>
+                        <div className="flex items-center gap-2 mb-2">
+                          <h3 className="font-bold">{order.id}</h3>
+                          <span className={`text-xs px-2 py-1 rounded-full ${getStatusColor(order.status)}`}>
+                            {order.status}
+                          </span>
+                        </div>
+                        <p className="text-sm text-gray-600">Order Date: {order.date}</p>
+                      </div>
+                      <div className="mt-2 md:mt-0 flex flex-col items-start md:items-end">
+                        <p className="font-medium">{order.total}</p>
+                        <div className="flex gap-2 mt-2">
+                          <Button variant="outline" size="sm">Track Order</Button>
+                          <Button variant="outline" size="sm">View Details</Button>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="space-y-4">
+                      {order.items.map((item, idx) => (
+                        <div key={idx} className="flex items-center gap-4">
+                          <div className="h-16 w-16 bg-gray-100 rounded flex items-center justify-center">
+                            <Image 
+                              src="/placeholder.svg?height=64&width=64" 
+                              alt={item.name}
+                              width={64}
+                              height={64}
+                              className="object-cover"
+                            />
+                          </div>
+                          <div className="flex-1">
+                            <h4 className="font-medium">{item.name}</h4>
+                            <p className="text-sm text-gray-600">Quantity: {item.quantity}</p>
+                          </div>
+                          <div className="text-right">
+                            <p className="font-medium">{item.price}</p>
+                            {order.status === "Delivered" && (
+                              <Button variant="ghost" size="sm" className="text-red-700 mt-1">
+                                Buy Again
+                              </Button>
+                            )}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+
+                    <div className="mt-4 pt-4 border-t">
+                      <div className="flex flex-col md:flex-row justify-between text-sm">
+                        <div>
+                          <p className="text-gray-600">Shipping Address:</p>
+                          <p>{order.address}</p>
+                        </div>
+                        <div className="mt-2 md:mt-0">
+                          <p className="text-gray-600">Tracking Number:</p>
+                          <p>{order.tracking}</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+
+            <div className="mt-6 flex justify-center">
+              <nav className="flex items-center gap-1">
+                <Button variant="outline" size="sm" disabled className="w-9 h-9 p-0">
+                  <span className="sr-only">Previous</span>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="16"
+                    height="16"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <path d="M15 18l-6-6 6-6" />
+                  </svg>
+                </Button>
+                <Button variant="outline" size="sm" className="w-9 h-9 p-0 bg-red-700 text-white">
+                  1
+                </Button>
+                <Button variant="outline" size="sm" className="w-9 h-9 p-0">
+                  2
+                </Button>
+                <Button variant="outline" size="sm" className="w-9 h-9 p-0">
+                  3
+                </Button>
+                <Button variant="outline" size="sm" className="w-9 h-9 p-0">
+                  <span className="sr-only">Next</span>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="16"
+                    height="16"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <path d="M9 18l6-6-6-6" />
+                  </svg>
+                </Button>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}

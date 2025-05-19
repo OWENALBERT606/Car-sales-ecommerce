@@ -123,12 +123,10 @@ model Order {
   userId      String
   items       OrderItem[]
   total       Float @default(0)
-  paymentMethod PaymentMethod @default(CASH)
-// shipping address
+  paymentMethod String @default("CASH")
   shippingAddress String
   shippingPhone String
   deliveryMethod  String
-
   status      OrderStatus @default(PENDING)
   scheduledAt DateTime?
   createdAt   DateTime   @default(now())
@@ -272,7 +270,7 @@ enum UserRole {
 }
 enum OrderStatus {
   PENDING
-  CONFIRMED
+  PROCESSING
   DELIVERED
   CANCELLED
 }
