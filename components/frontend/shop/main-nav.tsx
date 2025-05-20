@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import Link from "next/link"
 import { Menu, Search, ChevronDown, Heart, ShoppingCart } from "lucide-react"
 import { Button } from "@/components/ui/button"
@@ -9,8 +9,43 @@ import { Session } from "next-auth"
 import Logo from "@/components/global/Logo"
 import { signOut } from "next-auth/react"
 import { useRouter } from "next/navigation"
+import { AppDispatch } from "@/redux/store"
+import { useDispatch, useSelector } from "react-redux"
+import { addItem, clearCart } from "@/redux/slices/cartSlice"
 
 export default function MainNav({ session }: { session: Session | null }) {
+  const dispatch: AppDispatch = useDispatch();
+  const cartItems = useSelector((state: any) => state.cart.items);
+
+   
+      // Fetch items from local storage when the component mounts
+      useEffect(() => {
+        const storedItems = localStorage.getItem("cart");
+        if (storedItems) {
+          try {
+            const parsedItems = JSON.parse(storedItems);
+            if (Array.isArray(parsedItems)) {
+              const items = parsedItems.map((item: any) => ({
+                ...item,
+                qty: item.qty ?? 1 // Ensure qty defaults to 1
+              }));
+              // Dispatch addItem for each item to sync local storage with Redux
+              items.forEach((item: any) => {
+                dispatch(addItem(item));
+              });
+            }
+          } catch (error) {
+            console.error("Error parsing cart items from localStorage:", error);
+          }
+        }
+      }, [dispatch]);
+    
+      // Update local storage whenever cart items change
+      useEffect(() => {
+        localStorage.setItem("cart", JSON.stringify(cartItems));
+      }, [cartItems]);
+    
+
   const router=useRouter();
    async function handleLogout() {
       try {
@@ -21,6 +56,12 @@ export default function MainNav({ session }: { session: Session | null }) {
       }
     }
   const [searchQuery, setSearchQuery] = useState("")
+
+  const handleClearCart = () => {
+      dispatch(clearCart());
+      localStorage.removeItem("cart"); // Clear local storage as well
+    };
+  
 
   return (
     <header className="w-full px-4 md:px-12 lg:px-24 border-b border-gray-200 bg-white">
@@ -107,15 +148,10 @@ export default function MainNav({ session }: { session: Session | null }) {
           <Button variant="ghost" size="icon" className="relative">
             <Link href="/cart"><ShoppingCart className="h-6 w-6" /></Link>
             <span className="absolute -right-1 -top-1 flex h-5 w-5 items-center justify-center rounded-full bg-red-500 text-xs font-bold text-white">
-              0
+              {cartItems.length}
             </span>
             <span className="sr-only">Cart</span>
           </Button>
-
-          <div className="flex flex-col items-end text-right">
-            <span className="text-xs text-gray-600">0 items</span>
-            <span className="text-sm font-bold">$0.00</span>
-          </div>
         </div>
       </div>
 

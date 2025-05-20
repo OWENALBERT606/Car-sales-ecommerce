@@ -93,14 +93,15 @@ export async function deleteOrderItem(id: string) {
   }
 }
 
+// Bulk create makes
 export async function createBulkOrderItems(
-  items: Omit<OrderItem, "id" | "createdAt" | "updatedAt" | "total">[]
+  orderItems: Omit<OrderItem, "id" | "createdAt" | "updatedAt">[]
 ) {
   try {
-    await db.orderItem.createMany({
-      data: items,
-    });
+    for (const orderItem of orderItems) {
+      await createOrderItem(orderItem);
+    }
   } catch (error) {
-    console.error(error);
+    console.log(error);
   }
 }

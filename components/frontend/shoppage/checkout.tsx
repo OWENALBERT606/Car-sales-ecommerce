@@ -19,7 +19,7 @@ import { format } from "date-fns"
 import { cn } from "@/lib/utils"
 import { useDispatch, useSelector } from "react-redux"
 import { AppDispatch } from "@/redux/store"
-import { addItem } from "@/redux/slices/cartSlice"
+import { addItem, clearCart } from "@/redux/slices/cartSlice"
 import { createOrder } from "@/actions/orders"
 import { OrderStatus } from "@/types/types"
 import { createBulkOrderItems } from "@/actions/orderItem"
@@ -66,9 +66,14 @@ export default function CheckoutForm({session}:{session:any}) {
       localStorage.setItem("cart", JSON.stringify(cartItems));
     }, [cartItems]);
   
+const handleClearCart = () => {
+    dispatch(clearCart());
+    localStorage.removeItem("cart"); // Clear local storage as well
+  };
+
   
 const orderItems=cartItems;
-    
+    console.log(orderItems);
       // Calculate subtotal
     const subtotal = cartItems.reduce((total: number, item: any) => {
       return total + (item.salePrice || item.price) * item.qty;
@@ -105,19 +110,18 @@ const orderItems=cartItems;
             productId: item.id,
             quantity: quantity,
             unitPrice: price,
-            total: price * quantity, 
+            total: price * quantity,
           };
         });
+        console.log(orderItemsPayload);
+        await createBulkOrderItems(orderItemsPayload);
+        toast.success("order placed successfully")
+        router.push("/confirmation")
+        handleClearCart();
       
     };
-
-  
-      // Assuming you have a function to create order items
-      // await createBulkOrderItems(orderItemsPayload);
        setIsSubmitting(false)
-       // Redirect to confirmation page
-    toast.success("order placed successfully")
-    // router.push("/checkout/confirmation")
+    
     }catch{
 
     }

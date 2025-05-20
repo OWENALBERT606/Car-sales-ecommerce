@@ -25,7 +25,7 @@ export default function ConfirmationPage() {
         </CardContent>
         <CardFooter className="flex flex-col space-y-3">
           <Button asChild className="w-full bg-red-600 hover:bg-red-700">
-            <Link href="/orders">
+            <Link href="/profile">
               <ShoppingBag className="mr-2 h-4 w-4" />
               View My Orders
             </Link>
