@@ -532,7 +532,7 @@ export default function Products({ products,categories}: { products: any[] ,cate
           <div
             className={
               viewMode === "grid"
-                ? "grid gap-6 sm:grid-cols-2 lg:grid-cols-3"
+                ? "grid gap-6 sm:grid-cols-2 lg:grid-cols-4"
                 : "space-y-4"
             }
           >
