@@ -122,7 +122,7 @@ export default function TrendingProductCarousel({products}:{products:any}) {
           {products.map((product:any) => (
             <CarouselItem
               key={product.id}
-              className="pl-2 md:pl-4 sm:basis-1/2 md:basis-1/3 lg:basis-1/4"
+              className="pl-2 md:pl-4 sm:basis-1/2 md:basis-1/3 lg:basis-1/6"
             >
                        <Link href={`/shop/${product.id}`} className="block w-36 sm:w-40 md:w-44">
                 <div  className="group relative h-full rounded-lg border border-gray-200 bg-white shadow-sm transition-shadow hover:shadow-md flex flex-col">
