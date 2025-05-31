@@ -547,9 +547,9 @@ export default function Products({ products,categories}: { products: any[] ,cate
                     )}
                 
                     {/* Wishlist Button */}
-                    <button className="absolute right-1 top-1 z-10 rounded-full bg-white p-1 text-gray-400 shadow-sm hover:text-blue-500">
+                    {/* <button className="absolute right-1 top-1 z-10 rounded-full bg-white p-1 text-gray-400 shadow-sm hover:text-blue-500">
                       <Heart className="h-3 w-3" />     
-                    </button>
+                    </button> */}
                 
                     {/* Product Image - Full Width */}
                     <div className="overflow-hidden">

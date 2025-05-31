@@ -9,10 +9,13 @@ import Link from "next/link"
 import toast from "react-hot-toast"
 import { useRouter } from "next/navigation"
 
-export default function OrdersPage({ session }: { session: any }) {
+export default function OrdersPage({ session,allOrders }: { session: any,allOrders:any }) {
+
+const orders= allOrders.data.filter((order:any)=>order.userId===session?.user.id);
+console.log(orders)
 
   const router=useRouter();
-  // State to track active tab
+
   const [activeTab, setActiveTab] = useState("orders")
   if(!session){
     toast.error("you need to be signed in first");
@@ -20,41 +23,41 @@ export default function OrdersPage({ session }: { session: any }) {
    }
 
   // Sample orders data - in a real application, this would come from an API call
-  const orders = [
-    {
-      id: "ORD-7629385",
-      date: "May 15, 2025",
-      total: "UGX 78,500",
-      status: "Delivered",
-      items: [
-        { name: "Wireless Headphones", quantity: 1, price: "UGX 45,000" },
-        { name: "Phone Case", quantity: 1, price: "UGX 15,000" },
-      ],
-      address: "123 Main St, Kampala",
-      tracking: "TRK283947264",
-    },
-    {
-      id: "ORD-6529174",
-      date: "April 28, 2025",
-      total: "UGX 128,000",
-      status: "Processing",
-      items: [
-        { name: "Smart Watch", quantity: 1, price: "UGX 120,000" },
-        { name: "Watch Strap", quantity: 1, price: "UGX 8,000" },
-      ],
-      address: "123 Main St, Kampala",
-      tracking: "TRK738293471",
-    },
-    {
-      id: "ORD-5430962",
-      date: "March 12, 2025",
-      total: "UGX 35,000",
-      status: "Cancelled",
-      items: [{ name: "T-Shirt", quantity: 2, price: "UGX 35,000" }],
-      address: "123 Main St, Kampala",
-      tracking: "N/A",
-    },
-  ]
+  // const orders = [
+  //   {
+  //     id: "ORD-7629385",
+  //     date: "May 15, 2025",
+  //     total: "UGX 78,500",
+  //     status: "Delivered",
+  //     items: [
+  //       { name: "Wireless Headphones", quantity: 1, price: "UGX 45,000" },
+  //       { name: "Phone Case", quantity: 1, price: "UGX 15,000" },
+  //     ],
+  //     address: "123 Main St, Kampala",
+  //     tracking: "TRK283947264",
+  //   },
+  //   {
+  //     id: "ORD-6529174",
+  //     date: "April 28, 2025",
+  //     total: "UGX 128,000",
+  //     status: "Processing",
+  //     items: [
+  //       { name: "Smart Watch", quantity: 1, price: "UGX 120,000" },
+  //       { name: "Watch Strap", quantity: 1, price: "UGX 8,000" },
+  //     ],
+  //     address: "123 Main St, Kampala",
+  //     tracking: "TRK738293471",
+  //   },
+  //   {
+  //     id: "ORD-5430962",
+  //     date: "March 12, 2025",
+  //     total: "UGX 35,000",
+  //     status: "Cancelled",
+  //     items: [{ name: "T-Shirt", quantity: 2, price: "UGX 35,000" }],
+  //     address: "123 Main St, Kampala",
+  //     tracking: "N/A",
+  //   },
+  // ]
 
   // Sample wishlist data
   const wishlistItems = [
@@ -158,13 +161,13 @@ export default function OrdersPage({ session }: { session: any }) {
           </div>
         ) : (
           <div className="space-y-6">
-            {orders.map((order) => (
+            {orders.map((order:any) => (
               <div key={order.id} className="bg-white rounded-md p-6 shadow-sm">
                 <div className="flex flex-col md:flex-row justify-between mb-4 pb-4 border-b">
                   <div>
                     <div className="flex items-center gap-2 mb-2">
-                      <h3 className="font-bold">{order.id}</h3>
-                      <span className={`text-xs px-2 py-1 rounded-full ${getStatusColor(order.status)}`}>
+                      <p>Order Status</p>
+                      <span className={`text-lg px-2 py-1 rounded-full ${getStatusColor(order.status)}`}>
                         {order.status}
                       </span>
                     </div>
@@ -184,11 +187,11 @@ export default function OrdersPage({ session }: { session: any }) {
                 </div>
 
                 <div className="space-y-4">
-                  {order.items.map((item, idx) => (
+                  {order.items.map((item:any, idx:any) => (
                     <div key={idx} className="flex items-center gap-4">
                       <div className="h-16 w-16 bg-gray-100 rounded flex items-center justify-center">
                         <Image
-                          src="/placeholder.svg?height=64&width=64"
+                          src={item.product?.imageUrl}
                           alt={item.name}
                           width={64}
                           height={64}
@@ -286,9 +289,7 @@ export default function OrdersPage({ session }: { session: any }) {
         <div className="flex flex-col md:flex-row gap-6">
           <div className="md:w-1/3 flex flex-col items-center">
             <div className="h-32 w-32 bg-gray-100 rounded-full flex items-center justify-center mb-4">
-              {/* {
-                (session.user.imageUrl ?? <Image src={"//"} alt="fdf" width={200} height={200}/>):( <User size={64} className="text-gray-400" />)
-              } */}
+             <Image src={session.user.imageUrl} alt="fdf" width={200} height={200}/>
             </div>
             <Button className="bg-red-700 hover:bg-red-800 w-full md:w-auto">Change Photo</Button>
           </div>
@@ -502,16 +503,6 @@ export default function OrdersPage({ session }: { session: any }) {
                 <Bell size={20} />
                 <span>Notifications</span>
               </button>
-
-              <Link href="#" className="flex items-center gap-3 p-3 rounded-md hover:bg-gray-100 text-gray-700">
-                <Share2 size={20} />
-                <span>Share</span>
-              </Link>
-
-              <Link href="#" className="flex items-center gap-3 p-3 rounded-md hover:bg-gray-100 text-gray-700">
-                <LogOut size={20} />
-                <span>Sign Out</span>
-              </Link>
             </div>
           </div>
 

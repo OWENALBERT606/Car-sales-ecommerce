@@ -30,6 +30,7 @@ import { deleteType } from "@/actions/type";
 import { deleteBanner } from "@/actions/banners";
 import { deleteYear } from "@/actions/years";
 import { deleteMake } from "@/actions/make";
+import { deleteProduct } from "@/actions/products";
 
 type ActionColumnProps = {
   row: any;
@@ -71,7 +72,14 @@ export default function ActionColumn({
           window.location.reload();
         }
         toast.success(`${model} Deleted Successfully`);
+      }else if(model==="product"){
+        const res = await deleteProduct(id);
+        if (res?.ok) {
+          window.location.reload();
+        }
+        toast.success(`${model} Deleted Successfully`);
       }
+      
       else if(model==="banner"){
         const res = await deleteBanner(id);
         if (res?.ok) {
