@@ -22,7 +22,7 @@ export default function Logo({
         <div className="bg-blue-700 rounded-full p-1 flex items-center justify-center">
           <div className="relative" style={{width: imageSize, height: imageSize}}>
             <Image 
-              src="/images.png" 
+              src="/WhatsApp Image 2025-05-18 at 12.50.06_39af19d6.jpg" 
               alt="Nagota Logo"
               width={imageSize}
               height={imageSize}

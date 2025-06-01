@@ -25,13 +25,11 @@ import toast from "react-hot-toast";
 import Link from "next/link";
 import { deleteUser } from "@/actions/users";
 import { deleteCategory } from "@/actions/categories";
-import { useCategories } from "@/hooks/useCategories";
 import { deleteType } from "@/actions/type";
 import { deleteBanner } from "@/actions/banners";
 import { deleteYear } from "@/actions/years";
 import { deleteMake } from "@/actions/make";
 import { deleteProduct } from "@/actions/products";
-import { deleteOrder } from "@/actions/orders";
 import { deleteFuel } from "@/actions/fuels";
 
 type ActionColumnProps = {
