@@ -108,6 +108,7 @@ export default function SiteHeader({ session }: { session: Session | null }) {
   const [open, setOpen] = React.useState(false);
   const [showFeatures, setShowFeatures] = React.useState(false);
 
+
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 ">
       <div className="container max-w-7xl mx-auto flex h-14 items-center justify-between">
@@ -204,7 +205,15 @@ export default function SiteHeader({ session }: { session: Session | null }) {
         </div>
         {session ? (
           <Button asChild variant={"ghost"}>
-            <Link href="/dashboard">
+             <Link
+      href={
+        session.user.roles?.[0]?.roleName === "admin"
+          ? "/dashboard"
+          : session.user.roles?.[0]?.roleName === "user"
+          ? "/profile"
+          : "/profile"
+      }
+    >
               <Avatar>
                 <AvatarImage
                   src={session?.user?.image ?? ""}

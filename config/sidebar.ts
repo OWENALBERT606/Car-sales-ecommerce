@@ -11,6 +11,7 @@ import {
   LucideIcon,
   Presentation,
   Settings,
+  User,
   Users,
 } from "lucide-react";
 
@@ -62,7 +63,7 @@ export const sidebarLinks: ISidebarLink[] = [
       {
         title: "Profile",
         href: "/dashboard/profile",
-        permission: "roles.read",
+        permission: "orders.read",
       },
     ],
   },
@@ -149,34 +150,41 @@ export const sidebarLinks: ISidebarLink[] = [
     permission: "orders.read",
   },
   {
+    title: "Profile",
+    href: "/dashboard/profile",
+    icon: User,
+    dropdown: false,
+    permission: "users.read",
+  },
+  {
     title: "Settings",
     href: "/dashboard/settings",
     icon: Settings,
     dropdown: false,
     permission: "settings.read",
   },
-  {
-    title: "Reports",
-    icon: BarChart4,
-    dropdown: true,
-    href: "/dashboard/reports/products",
-    permission: "reports.read",
-    dropdownMenu: [
-      {
-        title: "Product Report",
-        href: "/dashboard/reports/products",
-        permission: "reports.read",
-      },
-      {
-        title: "Inventory Report",
-        href: "/dashboard/reports/inventory",
-        permission: "reports.read",
-      },
-      {
-        title: "Customers Report",
-        href: "/dashboard/reports/customers",
-        permission: "reports.read",
-      },
-    ],
-  },
+  // {
+  //   title: "Reports",
+  //   icon: BarChart4,
+  //   dropdown: true,
+  //   href: "/dashboard/reports/products",
+  //   permission: "reports.read",
+  //   dropdownMenu: [
+  //     {
+  //       title: "Product Report",
+  //       href: "/dashboard/reports/products",
+  //       permission: "reports.read",
+  //     },
+  //     {
+  //       title: "Inventory Report",
+  //       href: "/dashboard/reports/inventory",
+  //       permission: "reports.read",
+  //     },
+  //     {
+  //       title: "Customers Report",
+  //       href: "/dashboard/reports/customers",
+  //       permission: "reports.read",
+  //     },
+  //   ],
+  // },
 ];

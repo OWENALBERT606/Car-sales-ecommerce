@@ -26,8 +26,12 @@ export async function getAllOrders(): Promise<QueriesResponse> {
         createdAt: "desc",
       },
       include: {
-        items: true,
         user: true,
+        items: {
+          include: {
+            product: true,
+          },
+        },
       },
     });
 

@@ -31,6 +31,8 @@ import { deleteBanner } from "@/actions/banners";
 import { deleteYear } from "@/actions/years";
 import { deleteMake } from "@/actions/make";
 import { deleteProduct } from "@/actions/products";
+import { deleteOrder } from "@/actions/orders";
+import { deleteFuel } from "@/actions/fuels";
 
 type ActionColumnProps = {
   row: any;
@@ -53,17 +55,31 @@ export default function ActionColumn({
           window.location.reload();
         }
         toast.success(`${model} Deleted Successfully`);
-      }
-      else if(model==="category"){
+      }else if(model==="category"){
         const res = await deleteCategory(id);
         if (res?.ok) {
           window.location.reload();
         }
 
+      }else if(model==="category"){
+        const res = await deleteCategory(id);
+        if (res?.ok) {
+          window.location.reload();
+        }
+
+      }
+      else if(model==="fuel"){
+        const res = await deleteFuel(id);
+        if (res?.ok) {
+          
+          window.location.reload();
+        }
       }else if(model==="carType"){
         const res = await deleteType(id);
         if (res?.ok) {
+           toast.success(`${model} Deleted Successfully`);
           window.location.reload();
+
         }
         toast.success(`${model} Deleted Successfully`);
       }else if(model==="year"){
@@ -149,7 +165,7 @@ export default function ActionColumn({
         <DropdownMenuItem>
           <Link href={editEndpoint} className="flex item gap-2">
             <Pencil className="w-4 h-4 " />
-            <span>Edit</span>
+            <span>Edit or View</span>
           </Link>
         </DropdownMenuItem>
       </DropdownMenuContent>

@@ -27,14 +27,44 @@ import {
   ArrowDown,
   ArrowRight,
   ArrowUp,
+  Badge,
   Box,
   Download,
+  Link,
+  Package,
   ShoppingBag,
   ShoppingCart,
   Users,
 } from "lucide-react";
+import { format } from "date-fns";
 
-const metrics = [
+
+
+
+
+const topProducts = [
+  {
+    name: "Wireless Earbuds Pro",
+    sales: 1234,
+    revenue: "$45,678",
+    image: "/placeholder.svg?height=40&width=40",
+  },
+  {
+    name: "Smart Watch Elite",
+    sales: 987,
+    revenue: "$39,480",
+    image: "/placeholder.svg?height=40&width=40",
+  },
+  {
+    name: "Premium Laptop Stand",
+    sales: 865,
+    revenue: "$25,950",
+    image: "/placeholder.svg?height=40&width=40",
+  },
+];
+
+export default function DashboardMain({allOrders}:{allOrders:any}) {
+  const metrics = [
   {
     title: "Total Sales",
     value: "$120,784.02",
@@ -47,7 +77,7 @@ const metrics = [
   },
   {
     title: "Total Orders",
-    value: "28,834",
+    value: allOrders.data.length,
     change: {
       value: "20.1%",
       trend: "up" as const,
@@ -76,54 +106,6 @@ const metrics = [
     color: "bg-indigo-500",
   },
 ];
-
-const recentActivity = [
-  {
-    customer: "Sarah Johnson",
-    email: "sarah.j@example.com",
-    status: "Completed",
-    amount: "$234.50",
-    date: "5 min ago",
-    avatar: "/placeholder.svg?height=40&width=40",
-  },
-  {
-    customer: "Michael Chen",
-    email: "m.chen@example.com",
-    status: "Pending",
-    amount: "$129.99",
-    date: "10 min ago",
-    avatar: "/placeholder.svg?height=40&width=40",
-  },
-  {
-    customer: "Emma Wilson",
-    email: "emma.w@example.com",
-    status: "Processing",
-    amount: "$549.00",
-    date: "15 min ago",
-    avatar: "/placeholder.svg?height=40&width=40",
-  },
-];
-
-const topProducts = [
-  {
-    name: "Wireless Earbuds Pro",
-    sales: 1234,
-    revenue: "$45,678",
-    image: "/placeholder.svg?height=40&width=40",
-  },
-  {
-    name: "Smart Watch Elite",
-    sales: 987,
-    revenue: "$39,480",
-    image: "/placeholder.svg?height=40&width=40",
-  },
-  {
-    name: "Premium Laptop Stand",
-    sales: 865,
-    revenue: "$25,950",
-    image: "/placeholder.svg?height=40&width=40",
-  },
-];
 const bigCards = [
   {
     title: "Total Sales",
@@ -134,7 +116,7 @@ const bigCards = [
   },
   {
     title: "Total Orders",
-    value: "28,834",
+    value: allOrders.length,
     change: "+20.1%",
     trend: "up",
     icon: ShoppingBag,
@@ -154,7 +136,6 @@ const bigCards = [
     icon: Users,
   },
 ];
-export default function DashboardMain() {
   return (
     <div className="min-h-screen">
       <div className="max-w-7xl mx-auto space-y-6">
@@ -211,72 +192,58 @@ export default function DashboardMain() {
 
         <div className="grid grid-cols-12 gap-6">
           {/* Recent Activity Table */}
-          <Card className="col-span-8">
-            <CardHeader>
-              <CardTitle>Recent Activity</CardTitle>
-              <CardDescription>Latest customer transactions</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <Table>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead>Customer</TableHead>
-                    <TableHead>Status</TableHead>
-                    <TableHead>Amount</TableHead>
-                    <TableHead className="text-right">Time</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {recentActivity.map((activity) => (
-                    <TableRow key={activity.email}>
-                      <TableCell>
-                        <div className="flex items-center space-x-3">
-                          <Avatar>
-                            <AvatarImage
-                              src={activity.avatar}
-                              alt={activity.customer}
-                            />
-                            <AvatarFallback>
-                              {activity.customer
-                                .split(" ")
-                                .map((n) => n[0])
-                                .join("")}
-                            </AvatarFallback>
-                          </Avatar>
-                          <div>
-                            <div className="font-medium">
-                              {activity.customer}
-                            </div>
-                            <div className="text-sm text-muted-foreground">
-                              {activity.email}
-                            </div>
-                          </div>
-                        </div>
-                      </TableCell>
-                      <TableCell>
-                        <div
-                          className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium
-                          ${
-                            activity.status === "Completed"
-                              ? "bg-green-100 text-green-800"
-                              : activity.status === "Pending"
-                                ? "bg-yellow-100 text-yellow-800"
-                                : "bg-blue-100 text-blue-800"
-                          }`}
-                        >
-                          {activity.status}
-                        </div>
-                      </TableCell>
-                      <TableCell>{activity.amount}</TableCell>
-                      <TableCell className="text-right">
-                        {activity.date}
-                      </TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </CardContent>
-          </Card>
+          <Card className="lg:col-span-8">
+                     <CardHeader>
+                       <CardTitle>Recent Orders</CardTitle>
+                       <CardDescription>latest vehicle purchases</CardDescription>
+                     </CardHeader>
+                     <CardContent>
+                       <Table>
+                         <TableHeader>
+                           <TableRow>
+                             <TableHead>Product</TableHead>
+                             <TableHead>Status</TableHead>
+                             <TableHead>Total</TableHead>
+                             <TableHead className="text-right">Date</TableHead>
+                           </TableRow>
+                         </TableHeader>
+                         <TableBody>
+                           {allOrders.data.slice(0,5).map((order:any) => (
+                             <TableRow key={order.id}>
+                               <TableCell>
+                                 <div className="flex items-center space-x-3">
+                                   <Avatar>
+                                     <AvatarImage src={order.items[0].product.imageUrl} />
+                                     <AvatarFallback>
+                                       <Package className="h-4 w-4" />
+                                     </AvatarFallback>
+                                   </Avatar>
+                                   <div>
+                                     <div className="font-medium">{order.items[0].product.name}</div>
+                                     <div className="text-sm text-muted-foreground">{order.items[0].product.name}</div>
+                                   </div>
+                                 </div>
+                               </TableCell>
+                               <TableCell>
+                                 <Badge
+                                 >
+                                   {order.status}
+                                 </Badge>
+                               </TableCell>
+                               <TableCell className="font-medium">{order.total}</TableCell>
+                               <TableCell className="text-right text-muted-foreground"> {format(new Date(order.createdAt), "EEEE, dd MMMM yyyy")}</TableCell>
+                             </TableRow>
+                           ))}
+                         </TableBody>
+                       </Table>
+                       <div className="mt-4">
+                         <Button variant="outline" className="w-full">
+                           <Link className="flex" href="/dashboard/orders">View All Orders
+                           <ArrowRight className="ml-2 h-4 w-4" /></Link>
+                         </Button>
+                       </div>
+                     </CardContent>
+                   </Card>
 
           {/* Top Selling Products */}
           <Card className="col-span-4">

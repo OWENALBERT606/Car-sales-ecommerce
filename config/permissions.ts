@@ -125,13 +125,13 @@ export const permissions: ModulePermissions[] = [
     },
   },
   {
-    display: "Reports",
-    name: "reports",
+    display: "Profile",
+    name: "profile",
     permissions: {
-      create: "reports.create",
-      read: "reports.read",
-      update: "reports.update",
-      delete: "reports.delete",
+      create: "orders.create",
+      read: "orders.read",
+      update: "orders.update",
+      delete: "orders.delete",
     },
   },
   {
@@ -155,26 +155,6 @@ export const permissions: ModulePermissions[] = [
     },
   },
   {
-    display: "Farms",
-    name: "farms",
-    permissions: {
-      create: "farms.create",
-      read: "farms.read",
-      update: "farms.update",
-      delete: "farms.delete",
-    },
-  },
-  {
-    display: "Units",
-    name: "units",
-    permissions: {
-      create: "units.create",
-      read: "units.read",
-      update: "units.update",
-      delete: "units.delete",
-    },
-  },
-  {
     display: "Products",
     name: "products",
     permissions: {
@@ -182,26 +162,6 @@ export const permissions: ModulePermissions[] = [
       read: "products.read",
       update: "products.update",
       delete: "products.delete",
-    },
-  },
-  {
-    display: "Locations",
-    name: "locations",
-    permissions: {
-      create: "locations.create",
-      read: "locations.read",
-      update: "locations.update",
-      delete: "locations.delete",
-    },
-  },
-  {
-    display: "Blogs",
-    name: "blogs",
-    permissions: {
-      create: "blogs.create",
-      read: "blogs.read",
-      update: "blogs.update",
-      delete: "blogs.delete",
     },
   },
   {

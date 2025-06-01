@@ -45,6 +45,10 @@ export const columns: ColumnDef<Order>[] = [
   },
   
    {
+    accessorKey: "status",
+    header: ({ column }) => <SortableColumn column={column} title="Order Status" />,
+  },
+   {
     accessorKey: "total",
     header: ({ column }) => <SortableColumn column={column} title="Amount" />,
   },
@@ -56,13 +60,13 @@ export const columns: ColumnDef<Order>[] = [
   {
     id: "actions",
     cell: ({ row }) => {
-      const make = row.original;
+      const order = row.original;
       return (
         <ActionColumn
           row={row}
-          model="make"
-          editEndpoint={`/dashboard/orders/${make.id}`}
-          id={make.id}
+          model="order"
+          editEndpoint={`/dashboard/orders/${order.id}`}
+          id={order.id}
         />
       );
     },

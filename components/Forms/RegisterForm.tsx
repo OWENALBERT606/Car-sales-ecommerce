@@ -38,7 +38,7 @@ export default function RegisterForm() {
       } else if (res.status === 200) {
         setLoading(false);
         toast.success("Account Created successfully");
-        router.push("/");
+        router.push("/login");
       } else {
         setLoading(false);
         toast.error("Something went wrong");

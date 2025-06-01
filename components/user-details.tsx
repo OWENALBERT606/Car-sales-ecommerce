@@ -14,7 +14,7 @@ export default function OrdersPage({ session,allOrders }: { session: any,allOrde
 const orders= allOrders.data.filter((order:any)=>order.userId===session?.user.id);
 console.log(orders)
 
-  const router=useRouter();
+  const router=useRouter()
 
   const [activeTab, setActiveTab] = useState("orders")
   if(!session){

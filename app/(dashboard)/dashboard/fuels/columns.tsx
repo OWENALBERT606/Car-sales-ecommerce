@@ -50,13 +50,13 @@ export const columns: ColumnDef<Fuel>[] = [
   {
     id: "actions",
     cell: ({ row }) => {
-      const category = row.original;
+      const fuel = row.original;
       return (
         <ActionColumn
           row={row}
-          model="year"
-          editEndpoint={`/years/update/${category.id}`}
-          id={category.id}
+          model="fuel"
+          editEndpoint={`/fuel/update/${fuel.id}`}
+          id={fuel.id}
         />
       );
     },

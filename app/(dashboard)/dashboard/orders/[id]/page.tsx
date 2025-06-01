@@ -8,10 +8,11 @@ export default async function page({params}: {params: Promise<{ id: string }>}):
  const {id}= await params
  const order=await getOrderById(id)
  const orderItems=await getAllOrderItems();
+ 
 
   return (
     <div>
-        <OrderDetails orderItems={orderItems}  order={order}/>
+        <OrderDetails  orderItems={orderItems}  order={order}/>
     </div>
   )
 }

@@ -20,6 +20,7 @@ import {
   ChevronsUpDown,
 } from "lucide-react";
 import { signOut } from "next-auth/react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 
 interface UserDropdownProps {
@@ -67,23 +68,19 @@ export function UserDropdownMenu({
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56" align="end" forceMount>
-        <DropdownMenuItem onClick={handleUpgrade} className="cursor-pointer">
-          <Sparkles className="mr-2 h-4 w-4" />
-          <span>Upgrade to Pro</span>
-        </DropdownMenuItem>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
-          <DropdownMenuItem>
-            <Settings className="mr-2 h-4 w-4" />
-            <span>Account</span>
+          <DropdownMenuItem className="flex">
+           <Link href="/dashboard/profile">
+            <p className="flex"><Settings className="mr-2 h-4 w-4" />
+            <span>Account</span></p>
+           </Link>
           </DropdownMenuItem>
-          <DropdownMenuItem>
-            <CreditCard className="mr-2 h-4 w-4" />
-            <span>Billing</span>
-          </DropdownMenuItem>
-          <DropdownMenuItem>
-            <Bell className="mr-2 h-4 w-4" />
-            <span>Notifications</span>
+          <DropdownMenuItem className="flex">
+           <Link href="/dashboard/notifications">
+           <p className="flex"> <Bell className="mr-2 h-4 w-4" />
+            <span>Notifications</span></p>
+           </Link>
           </DropdownMenuItem>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
