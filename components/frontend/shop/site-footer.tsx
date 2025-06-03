@@ -23,8 +23,8 @@ export default function SiteFooter() {
                 Your trusted partner for high-quality new and pre-owned cars. Explore our wide selection and drive away with confidence.
               </p>
 
-              <Link href="mailto:info@nagotalmotors.com" className="text-sm font-medium text-red-600 hover:underline">
-                info@nagotalmotors.com
+              <Link href="mailto:nagotamotors@gmail.com" className="text-sm font-medium text-red-600 hover:underline">
+                nagotamotors@gmail.com
               </Link>
             </div>
 
@@ -34,7 +34,7 @@ export default function SiteFooter() {
 
               <div className="mb-4 flex items-center">
                 <Phone className="mr-2 h-5 w-5 text-red-600" />
-                <span className="text-lg font-medium">+256 701 234 567</span>
+                <span className="text-lg font-medium">+256 756 259 340</span>
               </div>
 
               <div className="mb-4 text-sm text-gray-600">
@@ -42,8 +42,8 @@ export default function SiteFooter() {
                 <p>Saturday: 9:00 – 14:00</p>
               </div>
 
-              <Link href="mailto:support@nagotalmotors.com" className="text-sm font-medium text-red-600 hover:underline">
-                support@nagotalmotors.com
+              <Link href="mailto:nagotamotors@gmail.com" className="text-sm font-medium text-red-600 hover:underline">
+                nagotamotors@gmail.com
               </Link>
             </div>
 
@@ -53,12 +53,12 @@ export default function SiteFooter() {
 
               <ul className="space-y-3 text-sm">
                 <li>
-                  <Link href="/help-center" className="text-gray-600 hover:text-red-600">
+                  <Link href="/about" className="text-gray-600 hover:text-red-600">
                     Help Center
                   </Link>
                 </li>
                 <li>
-                  <Link href="/my-account" className="text-gray-600 hover:text-red-600">
+                  <Link href="/dashboard/profile" className="text-gray-600 hover:text-red-600">
                     My Account
                   </Link>
                 </li>
@@ -73,14 +73,8 @@ export default function SiteFooter() {
                   </Link>
                 </li>
                 <li>
-                  <Link href="/compare" className="text-gray-600 hover:text-red-600">
-                    Compare Cars
-                  </Link>
                 </li>
                 <li>
-                  <Link href="/financing" className="text-gray-600 hover:text-red-600">
-                    Financing Options
-                  </Link>
                 </li>
               </ul>
             </div>
@@ -96,54 +90,22 @@ export default function SiteFooter() {
                   </Link>
                 </li>
                 <li>
-                  <Link href="/inventory" className="text-gray-600 hover:text-red-600">
+                  <Link href="/shop" className="text-gray-600 hover:text-red-600">
                     Browse Inventory
                   </Link>
                 </li>
                 <li>
-                  <Link href="/latest-arrivals" className="text-gray-600 hover:text-red-600">
+                  <Link href="/home" className="text-gray-600 hover:text-red-600">
                     Latest Arrivals
                   </Link>
                 </li>
                 <li>
-                  <Link href="/offers" className="text-gray-600 hover:text-red-600">
-                    Special Offers
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/sell-your-car" className="text-gray-600 hover:text-red-600">
-                    Sell Your Car
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/careers" className="text-gray-600 hover:text-red-600">
-                    Careers
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/contact" className="text-gray-600 hover:text-red-600">
+                  <Link href="/about" className="text-gray-600 hover:text-red-600">
                     Contact Us
                   </Link>
                 </li>
               </ul>
             </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Promotional Banners */}
-      <div className="border-t border-gray-200">
-        <div className="container mx-auto grid grid-cols-1 divide-y md:grid-cols-2 md:divide-x md:divide-y-0">
-          <div className="flex items-center justify-center p-4 text-center">
-            <p className="text-sm font-medium">
-              Up to $1000 off selected models{" "}
-              <Link href="/offers" className="ml-1 font-bold text-red-600 hover:underline">
-                View Offers
-              </Link>
-            </p>
-          </div>
-          <div className="flex items-center justify-center p-4 text-center">
-            <p className="text-sm font-medium">Free delivery within Kampala & Wakiso districts</p>
           </div>
         </div>
       </div>
@@ -170,8 +132,8 @@ export default function SiteFooter() {
 
             {/* Payment Methods */}
             <div className="flex items-center gap-2">
-              <Image src="/payments/visa.svg" alt="Visa" width={40} height={30} />
-              <Image src="/payments/mastercard.svg" alt="Mastercard" width={40} height={30} />
+              <Image src="/payment/visa.png" alt="Visa" width={40} height={30} />
+              <Image src="/payment/MasterCard_Logo.svg.png" alt="Mastercard" width={40} height={30} />
               <Image src="/payments/mobile-money.svg" alt="Mobile Money" width={40} height={30} />
               <Image src="/payments/bank-transfer.svg" alt="Bank Transfer" width={40} height={30} />
             </div>

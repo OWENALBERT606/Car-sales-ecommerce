@@ -58,7 +58,7 @@ export default function page() {
           <h2 className="mb-6 text-2xl font-bold">Discounted Fruits & Vegetables</h2>
           <ProductGridWithSidebar products={products} />
         </div>
-      <UserReviews />
+      {/* <UserReviews /> */}
         <NewsletterSubscription/>
       </div>
      

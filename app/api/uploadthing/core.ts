@@ -24,7 +24,7 @@ export const ourFileRouter = {
       return { uploadedBy: "Admin" };
     }
   ),
-  productImage: f({ image: { maxFileSize: "1MB"} }).onUploadComplete(
+  productImage: f({ image: { maxFileSize: "2MB"} }).onUploadComplete(
     async ({ metadata, file }) => {
       console.log("file url", file.url);
       return { uploadedBy: "Admin" };
