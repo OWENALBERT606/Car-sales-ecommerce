@@ -16,7 +16,7 @@ export default function TopNavigationBar() {
         {/* Left side navigation links */}
         <div className="hidden space-x-6 md:flex">
           <Link href="/about" className="text-gray-700 hover:text-gray-900">
-            About Us
+            Contact Us
           </Link>
           <Link href="/profile" className="text-gray-700 hover:text-gray-900">
             My Dashboard

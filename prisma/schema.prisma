@@ -73,7 +73,7 @@ model Blog {
   content       String?      @db.Text
   published     Boolean?     @default(false)
   featured      Boolean?     @default(false)
-  author        User         @relation(fields: [authorId], references: [id])
+  author        User         @relation(fields: [authorId], references: [id], onDelete: Cascade)
   authorId      String
   authorName    String
   authorImage   String?
@@ -146,9 +146,9 @@ model OrderItem {
 
 model Review {
   id        String   @id @default(cuid())
-  product   Product  @relation(fields: [productId], references: [id])
+  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
   productId String
-  user      User     @relation(fields: [userId], references: [id])
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId    String
   rating    Int
   comment   String?
@@ -157,9 +157,9 @@ model Review {
 
 model Message {
   id        String   @id @default(cuid())
-  sender    User     @relation("Sender", fields: [senderId], references: [id])
+  sender    User     @relation("Sender", fields: [senderId], references: [id], onDelete: Cascade)
   senderId  String
-  receiver  User     @relation("Receiver", fields: [receiverId], references: [id])
+  receiver  User     @relation("Receiver", fields: [receiverId], references: [id], onDelete: Cascade)
   receiverId String
   content   String
   read      Boolean  @default(false)
@@ -168,7 +168,7 @@ model Message {
 
 model Notification {
   id        String   @id @default(cuid())
-  user      User     @relation(fields: [userId], references: [id])
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId    String
   message   String
   read      Boolean  @default(false)

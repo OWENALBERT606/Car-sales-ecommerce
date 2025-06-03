@@ -12,13 +12,13 @@ export const ourFileRouter = {
       return { uploadedBy: "Admin" };
     }
   ),
-  makeImage: f({ image: { maxFileSize: "1MB" } }).onUploadComplete(
+  makeImage: f({ image: { maxFileSize: "2MB" } }).onUploadComplete(
     async ({ metadata, file }) => {
       console.log("file url", file.url);
       return { uploadedBy: "Admin" };
     }
   ),
-  productImages: f({ image: { maxFileSize: "8MB" ,maxFileCount:12} }).onUploadComplete(
+  productImages: f({ image: { maxFileSize: "16MB" ,maxFileCount:12} }).onUploadComplete(
     async ({ metadata, file }) => {
       console.log("file url", file.url);
       return { uploadedBy: "Admin" };
