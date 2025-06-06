@@ -86,8 +86,9 @@ const notifications = [
 
 export default function UserDashboard({allOrders,session}:{allOrders:any,session:any}) {
 
-  const orders=  allOrders.data.filter((order:any) => order.userId === session?.user?.id);
-  console.log(orders);
+  // const orders=  allOrders.data.filter((order:any) => order.userId === session?.user?.id);
+  // console.log(orders);
+  const orders=allOrders
   const userStats = [
   {
     title: "Total Orders",
@@ -192,13 +193,13 @@ export default function UserDashboard({allOrders,session}:{allOrders:any,session
                       <TableCell>
                         <div className="flex items-center space-x-3">
                           <Avatar>
-                            <AvatarImage src={order.items[0].product.imageUrl} />
+                            <AvatarImage src={order.items?.[0]?.product?.imageUrl} />
                             <AvatarFallback>
                               <Package className="h-4 w-4" />
                             </AvatarFallback>
                           </Avatar>
                           <div>
-                            <div className="font-medium">{order.items[0].product.name}</div>
+                            <div className="font-medium">{order.items?.[0]?.product?.name}</div>
                             <div className="text-sm text-muted-foreground">{order.items[0].product.name}</div>
                           </div>
                         </div>
@@ -328,3 +329,5 @@ export default function UserDashboard({allOrders,session}:{allOrders:any,session
     </div>
   )
 }
+
+

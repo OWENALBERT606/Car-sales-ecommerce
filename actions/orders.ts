@@ -5,6 +5,9 @@ import { MutationResponse, QueriesResponse } from "@/types/types";
 import { Order, OrderItem, OrderStatus, PaymentMethod } from "@prisma/client";
 import { revalidatePath } from "next/cache";
 
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/config/auth";
+
 // Create a new order
 export async function createOrder(data: Omit<Order, "id" | "createdAt" | "updatedAt">): Promise<MutationResponse> {
   try {
@@ -20,8 +23,17 @@ export async function createOrder(data: Omit<Order, "id" | "createdAt" | "update
 
 // Get all orders
 export async function getAllOrders(): Promise<QueriesResponse> {
+
   try {
+     const session = await getServerSession(authOptions);
+
+    if (!session?.user) {
+      return { data: [], error: "Unauthorized" };
+    }
+
+    const isAdmin = session.user.roles[0].roleName === "administrator";
     const orders = await db.order.findMany({
+       where: isAdmin ? {} : { userId: session.user.id },
       orderBy: {
         createdAt: "desc",
       },

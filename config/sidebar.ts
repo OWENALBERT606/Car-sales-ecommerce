@@ -116,32 +116,32 @@ export const sidebarLinks: ISidebarLink[] = [
       },
     ],
   },
-  {
-    title: "Sales",
-    icon: CircleDollarSign,
-    dropdown: true,
-    href: "/dashboard/sales",
-    permission: "sales.read",
-    dropdownMenu: [
-      {
-        title: "Sales",
-        href: "/dashboard/sales",
-        permission: "sales.read",
-      },
-      {
-        title: "Customers",
-        href: "/dashboard/sales/customers",
-        permission: "customers.read",
-      },
-    ],
-  },
-  {
-    title: "Blogs",
-    icon: Book,
-    dropdown: false,
-    href: "/dashboard/blogs",
-    permission: "blogs.read",
-  },
+  // {
+  //   title: "Sales",
+  //   icon: CircleDollarSign,
+  //   dropdown: true,
+  //   href: "/dashboard/sales",
+  //   permission: "sales.read",
+  //   dropdownMenu: [
+  //     {
+  //       title: "Sales",
+  //       href: "/dashboard/sales",
+  //       permission: "sales.read",
+  //     },
+  //     {
+  //       title: "Customers",
+  //       href: "/dashboard/sales/customers",
+  //       permission: "customers.read",
+  //     },
+  //   ],
+  // },
+  // {
+  //   title: "Blogs",
+  //   icon: Book,
+  //   dropdown: false,
+  //   href: "/dashboard/blogs",
+  //   permission: "blogs.read",
+  // },
   {
     title: "Orders",
     href: "/dashboard/orders",

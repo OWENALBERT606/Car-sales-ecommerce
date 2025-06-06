@@ -13,7 +13,6 @@ export default async function Dashboard() {
   const isUser = userRoles.some((role: any) => role.roleName === "user");
 
   const allOrders = await getAllOrders();
-  console.log(allOrders);
   // const user = await getAuthenticatedUser();
   // const allOrders=await getAllOrders();
   // const session = await getServerSession(authOptions);
