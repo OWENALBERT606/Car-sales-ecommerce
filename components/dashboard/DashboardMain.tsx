@@ -343,7 +343,7 @@ export default function DashboardMain({ allOrders }: { allOrders: any }) {
   const metrics = [
     {
       title: "Total Sales",
-      value: "$120,784.02",
+      value: "UGX 0",
       change: {
         value: "12.3%",
         trend: "up" as const,
@@ -386,7 +386,7 @@ export default function DashboardMain({ allOrders }: { allOrders: any }) {
   const bigCards = [
     {
       title: "Total Sales",
-      value: "$120,784.02",
+      value: "UGX-0",
       change: "+12.3%",
       trend: "up",
       icon: ShoppingCart,
@@ -542,7 +542,7 @@ export default function DashboardMain({ allOrders }: { allOrders: any }) {
           </Card>
 
           {/* Top Selling Products */}
-          <Card className="col-span-4">
+          {/* <Card className="col-span-4">
             <CardHeader>
               <CardTitle>Top Selling Products</CardTitle>
               <CardDescription>Best performing products</CardDescription>
@@ -568,7 +568,7 @@ export default function DashboardMain({ allOrders }: { allOrders: any }) {
                 ))}
               </div>
             </CardContent>
-          </Card>
+          </Card> */}
         </div>
       </div>
     </div>
