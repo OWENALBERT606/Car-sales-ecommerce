@@ -158,7 +158,7 @@ const orderItems=cartItems;
             </CardContent>
           </Card>
 
-          <Card>
+          {/* <Card>
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <Truck className="h-5 w-5" />
@@ -243,7 +243,7 @@ const orderItems=cartItems;
                 </div>
               </RadioGroup>
             </CardContent>
-          </Card>
+          </Card> */}
 
           <Card>
             <CardHeader>
