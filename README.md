@@ -63,33 +63,8 @@ To get this:
 
 ### Authentication Providers
 
-#### GitHub OAuth
 
-1. Go to [GitHub Developer Settings](https://github.com/settings/developers)
-2. Create a new OAuth App
-3. Set homepage URL to `http://localhost:3000`
-4. Set callback URL to `http://localhost:3000/api/auth/callback/github`
-5. Copy credentials and add to `.env`:
 
-```env
-GITHUB_CLIENT_ID="your_client_id"
-GITHUB_SECRET="your_client_secret"
-```
-
-#### Google OAuth
-
-1. Go to [Google Cloud Console](https://console.cloud.google.com)
-2. Create a new project
-3. Enable OAuth 2.0
-4. Configure OAuth consent screen
-5. Create credentials (OAuth client ID)
-6. Set authorized redirect URI to `http://localhost:3000/api/auth/callback/google`
-7. Add to `.env`:
-
-```env
-GOOGLE_CLIENT_ID="your_client_id"
-GOOGLE_CLIENT_SECRET="your_client_secret"
-```
 
 ### NextAuth Configuration
 
@@ -200,11 +175,9 @@ The system includes permissions for:
 - Dashboard management
 - User management
 - Role management
-- Sales and orders
-- Inventory management
+- orders
 - Settings and configurations
-- Reports and analytics
-
+- Reports and analytic
 Each module has these permission types:
 
 - `create`: Create new items
@@ -239,13 +212,4 @@ Example: `users.create`, `users.read`, etc.
    - Check user role assignments
    - Verify permission strings match exactly
 
-## Contributing
 
-1. Create a feature branch
-2. Make changes
-3. Write tests
-4. Submit PR
-
-## License
-
-MIT
